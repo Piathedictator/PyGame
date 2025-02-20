@@ -53,18 +53,18 @@ def draw_board(screen, board): #defining the general board appearance
 
 
 # defining the main functioning parts
-def add_new_tile(board):
+def add_new_tile(board): #adding new squares with a number either 2 or 4 
     empty_tiles = [(r, c) for r in range(SIZE) for c in range(SIZE) if board[r][c] == 0] #defining empty tiles
     if empty_tiles: #adding new squares only to empty tiles
         row, col = random.choice(empty_tiles)
         board[row][col] = 2 if random.random() < 0.65 else 4 #new square with number 2 or 4 - the chance for a 2 is greater
 
 def slide_row_left(row):
-    new_row = [i for i in row if i != 0] #filter of all non-empty tiles (0), all elements are stored in the list
-    new_row += [0] * (SIZE - len(new_row)) #
-    for i in range(SIZE - 1):
-        if new_row[i] == new_row[i + 1] and new_row[i] != 0:
-            new_row[i] *= 2
+    new_row = [i for i in row if i != 0] #filter of all non-empty tiles (not 0), all elements are stored in the list
+    new_row += [0] * (SIZE - len(new_row)) #adding back  0s at the end of the list to maintain the same number of tiles in the list and on the board
+    for i in range(SIZE - 1): 
+        if new_row[i] == new_row[i + 1] and new_row[i] != 0: #comparing the elements next to each other and doubling the first value if equvalent, setting 2. value 0
+            new_row[i] *= 2 
             new_row[i + 1] = 0
     new_row = [i for i in new_row if i != 0]
     new_row += [0] * (SIZE - len(new_row))
