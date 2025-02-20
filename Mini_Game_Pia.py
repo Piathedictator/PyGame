@@ -1,12 +1,11 @@
 import pygame
 
-# Pygame initialisieren
 pygame.init()
 
 # Fenstergröße
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 600, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Singleplayer Pong 🏓")
+pygame.display.set_caption("Pong_Game")
 
 # Farben
 WHITE = (255, 255, 255)
@@ -17,11 +16,11 @@ paddle_width, paddle_height = 15, 100
 ball_size = 15
 paddle_speed = 7
 ball_speed_x, ball_speed_y = 5, -5  # Ball startet nach oben
-speed_multiplier = 1.05  # Erhöhung der Geschwindigkeit nach jedem Treffer
+speed_multiplier = 1.005  # Erhöhung der Geschwindigkeit nach jedem Treffer
 
 # Positionen
-player = pygame.Rect(20, HEIGHT // 2 - paddle_height // 2, paddle_width, paddle_height)
-ball = pygame.Rect(WIDTH // 2 - ball_size // 2, HEIGHT // 2 - ball_size // 2, ball_size, ball_size)
+player = pygame.Rect(20, HEIGHT / 2, paddle_width, paddle_height)
+ball = pygame.Rect(WIDTH / 2 , HEIGHT / 2, ball_size, ball_size)
 
 # Punktestand
 score = 0
@@ -73,7 +72,6 @@ while running:
     # Zeichnen
     pygame.draw.rect(screen, WHITE, player)
     pygame.draw.ellipse(screen, WHITE, ball)
-    pygame.draw.aaline(screen, WHITE, (WIDTH // 2, 0), (WIDTH // 2, HEIGHT))
 
     # Punktestand anzeigen
     score_text = font.render(f"Score: {score}", True, WHITE)
