@@ -19,7 +19,7 @@ ball_speed_x, ball_speed_y = 5, -5  # Ball startet nach oben
 speed_multiplier = 1.005  # Erhöhung der Geschwindigkeit nach jedem Treffer
 
 # Positionen
-player = pygame.Rect(20, HEIGHT / 2, paddle_width, paddle_height)
+player = pygame.Rect(HEIGHT / 2, 570 , paddle_height, paddle_width)
 ball = pygame.Rect(WIDTH / 2 , HEIGHT / 2, ball_size, ball_size)
 
 # Punktestand
@@ -40,32 +40,32 @@ while running:
 
     # Steuerung für den Spieler (Pfeiltasten)
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and player.top > 0:
-        player.y -= paddle_speed
-    if keys[pygame.K_DOWN] and player.bottom < HEIGHT:
-        player.y += paddle_speed
+    if keys[pygame.K_LEFT] and player.top > 0:
+        player.x -= paddle_speed
+    if keys[pygame.K_RIGHT] and player.bottom < HEIGHT:
+        player.x += paddle_speed
 
     # Ballbewegung
     ball.x += ball_speed_x
     ball.y += ball_speed_y
 
-    # Ball-Kollision mit Wänden oben & unten
-    if ball.top <= 0 or ball.bottom >= HEIGHT:
-        ball_speed_y *= -1
-
-    # Ball-Kollision mit rechter Wand (Punkt für Spieler)
-    if ball.right >= WIDTH:
+    # Ball-Kollision mit Wänden links & rechts
+    if ball.left <= 0 or ball.right >= WIDTH:
         ball_speed_x *= -1
+
+    # Ball-Kollision mit oberer Wand (Punkt für Spieler)
+    if ball.top <= 0:
+        ball_speed_y *= -1
         score += 1  # Punkt hinzufügen
 
     # Ball-Kollision mit Spieler-Schläger
     if ball.colliderect(player):
-        ball_speed_x *= -1  # Ball zurückschicken
+        ball_speed_y *= -1  # Ball zurückschicken
         ball_speed_x *= speed_multiplier  # Geschwindigkeit erhöhen
         ball_speed_y *= speed_multiplier  # Geschwindigkeit erhöhen
 
     # Wenn der Ball links verschwindet → Game Over
-    if ball.left <= 0:
+    if ball.bottom >= HEIGHT:
         print(f"Game Over! Dein Score: {score}")
         running = False
 
