@@ -25,27 +25,26 @@ font_instruction = pygame.font.Font(None, 30)
 
 # Eingabefelder
 player_name = ""
-input_box = pygame.Rect(width / 2 - 100, height / 2 - 50, 200, 40)
+input_box = pygame.Rect(width / 2 - 100, 100, 200, 40)
 
 # Buttons
-start_button = pygame.Rect(width / 2 - 75, height / 2 + 50, 150, 50)
+start_button = pygame.Rect(width / 2 - 75, 500, 150, 50)
 
 # Score Liste
 score = 0
 high_scores = []
 
-# Funktion zum Zeichnen der Startseite
-def name_input_screen():
+# Funktion zum Zeichnen der Seite mit Namensabfrage und High Scores
+def name_input_and_high_scores_screen():
     global player_name, score, high_scores
     running = True
     while running:
         screen.blit(background, (0, 0))
         
-        # Anweisungen
+        # Anweisungen und Namensfeld
         instruction_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
-        screen.blit(instruction_text, (width / 2 - instruction_text.get_width() / 2, 200))
+        screen.blit(instruction_text, (width / 2 - instruction_text.get_width() / 2, 60))
         
-        # Eingabefeld für Namen
         pygame.draw.rect(screen, white, input_box)
         name_text = font.render(player_name, True, black)
         screen.blit(name_text, (input_box.x + 10, input_box.y + 5))
@@ -54,6 +53,14 @@ def name_input_screen():
         pygame.draw.rect(screen, white, start_button)
         start_text = font.render("Start Spiel", True, black)
         screen.blit(start_text, (start_button.x + 10, start_button.y + 10))
+        
+        # Anzeige der High Scores
+        title_text = font_title.render("Top 5 Scores", True, pink)
+        screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 200))
+        
+        for i, score_entry in enumerate(high_scores):
+            score_text = font.render(f"{i+1}. {score_entry['name']} - {score_entry['score']}", True, pink)
+            screen.blit(score_text, (width / 2 - score_text.get_width() / 2, 250 + i * 40))
         
         pygame.display.flip()
 
@@ -75,13 +82,13 @@ def name_input_screen():
             if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
                 # Starte das Spiel
                 print("Spiel wird gestartet!")
-                os.system("python First_Page_Pia.py")
+                os.system("python 2_First_Page_Pia.py")
                 
                 # Hier kannst du den Score speichern (z.B. score = 100)
-                score = 100  # Zum Beispiel
-                # Top 5 Scores speichern
-                high_scores.append(score)
-                high_scores.sort(reverse=True)  # Sortiere absteigend
+                score = 0  # Zum Beispiel
+                # Speichere den Spielernamen und Score
+                high_scores.append({"name": player_name, "score": score})
+                high_scores.sort(key=lambda x: x['score'], reverse=True)  # Sortiere absteigend nach Score
                 high_scores = high_scores[:5]  # Top 5 Scores behalten
                 
                 # Speichere die Scores in einer Datei
@@ -90,28 +97,6 @@ def name_input_screen():
                 
                 running = False
 
-# Funktion zum Anzeigen der Top 5 Scores
-def display_high_scores():
-    running = True
-    while running:
-        screen.blit(background, (0, 0))
-        
-        # Titel
-        title_text = font_title.render("Top 5 Scores", True, pink)
-        screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 50))
-        
-        # Top 5 Scores anzeigen
-        for i, score in enumerate(high_scores):
-            score_text = font.render(f"{i+1}. {score}", True, pink)
-            screen.blit(score_text, (width / 2 - score_text.get_width() / 2, 150 + i * 40))
-        
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
 # Lädt die gespeicherten High Scores, falls die Datei existiert
 try:
     with open("high_scores.json", "r") as f:
@@ -119,8 +104,5 @@ try:
 except FileNotFoundError:
     high_scores = []
 
-# Aufruf der Seite für die Namensabfrage
-name_input_screen()
-
-# Zeige die Top 5 Scores nach dem Spiel
-display_high_scores()
+# Aufruf der Seite für die Namensabfrage und Anzeige der High Scores
+name_input_and_high_scores_screen()
