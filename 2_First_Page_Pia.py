@@ -3,12 +3,12 @@ import pygame
 pygame.init()
 
 # Fenstergröße
-WIDTH, HEIGHT = 600, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+width, height = 600, 600
+screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong - Startseite")
 
 background = pygame.image.load("background_pong.jpg")  # Bild laden
-background = pygame.transform.scale(background, (WIDTH, HEIGHT))  # Größe anpassen
+background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Farben
 white = (255, 255, 255)
@@ -21,7 +21,7 @@ font_instruction = pygame.font.Font(None, 30)
 info_font = pygame.font.Font(None, 30)
 
 # Info-Symbol
-info_button = pygame.Rect(WIDTH / 2 - 15, HEIGHT/2 + 75, 30, 30)
+info_button = pygame.Rect(width / 2 - 15, height/2 + 75, 30, 30)
 info_visible = False
 info_text = [
     "Steuere den Schläger mit den Pfeiltasten.",
@@ -30,7 +30,7 @@ info_text = [
 
 def start_screen():
     global info_visible
-    start_button = pygame.Rect(WIDTH / 2 - 75, HEIGHT / 2, 150, 50)
+    start_button = pygame.Rect(width / 2 - 75, height / 2, 150, 50)
     running = True
     
     while running:
@@ -38,16 +38,16 @@ def start_screen():
         
         #Titel:
         title_text = font.render("Willkommen zu Pong!", True, white)
-        screen.blit(title_text, (WIDTH / 2 - title_text.get_width() / 2, 150))
+        screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 150))
 
         #Instuction Text:
         instructions_text = font_instruction.render("Drücke den Start-Button, um zu spielen.", True, white)
-        screen.blit(instructions_text, (WIDTH / 2 - instructions_text.get_width() / 2, 200))
+        screen.blit(instructions_text, (width / 2 - instructions_text.get_width() / 2, 200))
         
         #Start Button
         pygame.draw.rect(screen, white, start_button)
         button_text = font.render("Start", True, (0, 0, 0))
-        screen.blit(button_text, (WIDTH / 2 - button_text.get_width() / 2, HEIGHT / 2 + 10))
+        screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 10))
         
         # Info-Symbol
         pygame.draw.circle(screen, blue, info_button.center, 15)
@@ -58,7 +58,7 @@ def start_screen():
         if info_visible:
             for i, line in enumerate(info_text):
                 text_surface = info_font.render(line, True, white)
-                screen.blit(text_surface, (WIDTH/ 2 - 200, (HEIGHT/2 +120) + i * 20))
+                screen.blit(text_surface, (width/ 2 - 200, (height/2 +120) + i * 20))
         
         pygame.display.flip()
         
@@ -74,4 +74,4 @@ def start_screen():
 start_screen()
 
 import os
-os.system("python Mini_Game_Pia.py")
+os.system("python 2.1_Mini_Game_Pia.py")

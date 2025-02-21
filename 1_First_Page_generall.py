@@ -76,4 +76,4 @@ def start_screen():
 start_screen()
 
 import os
-os.system("python Second_Page.py")
+os.system("python 1.1_Second_Page.py")
