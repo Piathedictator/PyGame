@@ -7,8 +7,8 @@ WIDTH, HEIGHT = 600, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong - Startseite")
 
-background = pygame.image.load("background_pong_intro.jpg")  # Bild laden
-background = pygame.transform.scale(background, (width, height))  # Größe anpassen
+background = pygame.image.load("background_pong.jpg")  # Bild laden
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))  # Größe anpassen
 
 # Farben
 white = (255, 255, 255)
