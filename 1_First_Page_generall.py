@@ -1,4 +1,6 @@
 import pygame
+import sys
+import os
 
 pygame.init()
 
@@ -7,73 +9,58 @@ width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Startseite_Python_Game")
 
-background = pygame.image.load("start_image.jpg")  # Bild laden
-background = pygame.transform.scale(background, (width, height))  # Größe anpassen
+# Hintergrundbild
+background = pygame.image.load("start_image.jpg")
+background = pygame.transform.scale(background, (width, height))
 
-# Farben
-white = (255, 255, 255)
-blue = (173, 216, 230)
-gray = (180, 180, 180)
-pink = (251, 0, 255)
-black = (0, 0, 0)
-
-# Schriftart
+# Farben & Schriftarten
+white, pink, black, blue = (255, 255, 255), (251, 0, 255), (0, 0, 0), (173, 216, 230)
 font = pygame.font.Font(None, 50)
 font_titel = pygame.font.Font(None, 70)
 font_instruction = pygame.font.Font(None, 30)
-info_font = pygame.font.Font(None, 30)
 
-# Info-Symbol
-info_button = pygame.Rect(width / 2 - 15, height/2 + 75, 30, 30)
-info_visible = False
-info_text = [
-    "Spiele dich durch drei Mini-Spiele und so viele Punkte wie du kannst!",
-]
+# UI-Elemente
+input_box = pygame.Rect(width / 2 - 100, 250, 200, 40)
+start_button = pygame.Rect(width / 2 - 75, 350, 150, 50)
+info_button = pygame.Rect(width / 2 - 15, 420, 30, 30)
+info_visible, player_name = False, ""
+info_text = ["Spiele dich durch drei Mini-Spiele und sammle Punkte!"]
 
 def start_screen():
-    global info_visible
-    start_button = pygame.Rect(width / 2 - 75, height / 2, 150, 50)
-    running = True
-    
-    while running:
+    global info_visible, player_name
+    while True:
         screen.blit(background, (0, 0))
-        
-        #Titel:
-        title_text = font_titel.render("Lets play Python", True, pink)
-        screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 150))
-
-        #Instuction Text:
-        instructions_text = font_instruction.render("Drücke den Start-Button, um zu spielen.", True, pink)
-        screen.blit(instructions_text, (width / 2 - instructions_text.get_width() / 2, 200))
-        
-        #Start Button
+        screen.blit(font_titel.render("Let's Play Python", True, pink), (width / 2 - 180, 150))
+        screen.blit(font_instruction.render("Gib deinen Spielernamen ein:", True, pink), (width / 2 - 140, 220))
+        pygame.draw.rect(screen, white, input_box)
+        screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
         pygame.draw.rect(screen, white, start_button)
-        button_text = font.render("Lets Go", True, (0, 0, 0))
-        screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 10))
-        
-        # Info-Symbol
+        screen.blit(font.render("Start Spiel", True, black), (start_button.x + 10, start_button.y + 10))
         pygame.draw.circle(screen, blue, info_button.center, 15)
-        info_icon = font.render("i", True, white)
-        screen.blit(info_icon, (info_button.x + 10, info_button.y))
-        
-        # Info-Text anzeigen, wenn aktiv
+        screen.blit(font.render("i", True, white), (info_button.x + 10, info_button.y))
         if info_visible:
-            for i, line in enumerate(info_text):
-                text_surface = info_font.render(line, True, white)
-                screen.blit(text_surface, (width/ 2 - 200, (height/2 +120) + i * 20))
-        
+            screen.blit(font_instruction.render(info_text[0], True, white), (width / 2 - 200, 460))
         pygame.display.flip()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
-            if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
-                running = False
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    player_name = player_name[:-1]
+                elif event.key == pygame.K_RETURN and player_name:
+                    os.system(f"python 2_First_Page_Pia.py '{player_name}'")
+                    return
+                else:
+                    player_name += event.unicode
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.collidepoint(event.pos) and player_name:
+                    os.system(f"python 2_First_Page_Pia.py '{player_name}'")
+                    return
+                if info_button.collidepoint(event.pos):
+                    info_visible = not info_visible
             if event.type == pygame.MOUSEMOTION:
                 info_visible = info_button.collidepoint(event.pos)
 
 start_screen()
-
-import os
-os.system("python 1.1_Second_Page.py")
