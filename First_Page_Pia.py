@@ -7,6 +7,9 @@ WIDTH, HEIGHT = 600, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Pong - Startseite")
 
+background = pygame.image.load("background_pong_intro.jpg")  # Bild laden
+background = pygame.transform.scale(background, (width, height))  # Größe anpassen
+
 # Farben
 white = (255, 255, 255)
 blue = (173, 216, 230)
@@ -31,7 +34,7 @@ def start_screen():
     running = True
     
     while running:
-        screen.fill((0, 0, 0))
+        screen.blit(background, (0, 0))
         
         #Titel:
         title_text = font.render("Willkommen zu Pong!", True, white)
