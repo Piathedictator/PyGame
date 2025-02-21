@@ -96,7 +96,7 @@ while running:
 
     # Ball:
     pygame.draw.ellipse(screen, dark_gray, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
-    pygame.draw.ellipse(screen, white, ball)
+    pygame.draw.ellipse(screen, white, ball) 
 
     obstacle_colour = (255, 218, 185)
     for obstacle in obstacles:
