@@ -88,7 +88,14 @@ while running:
 
     # Visualisierung:
     white = (255, 255, 255)
+    dark_gray = (100, 100, 100)
+
+    # Schläger:
+    pygame.draw.rect(screen, dark_gray, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten
     pygame.draw.rect(screen, white, player)
+
+    # Ball:
+    pygame.draw.ellipse(screen, dark_gray, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
     pygame.draw.ellipse(screen, white, ball)
 
     obstacle_colour = (255, 218, 185)
