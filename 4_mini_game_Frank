@@ -16,7 +16,7 @@ blue = pygame.Color(0, 0, 255)
 pygame.init()
 
 # Spielfeldgröße und Laden des Hintergrundbildes
-WIDTH, HEIGHT = 600, 400
+WIDTH, HEIGHT = 600, 600
 GRID_SIZE = 20
 BACKGROUND_IMAGE = pygame.image.load("Synthwave.jpg")  # Hintergrundbild laden
 BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))
