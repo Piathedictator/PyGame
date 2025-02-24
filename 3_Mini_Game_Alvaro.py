@@ -31,7 +31,7 @@ TILE_COLORS = {
 FONT_COLOR = (0, 0, 0)
 FONT = pygame.font.SysFont('arial', 40)
 
-
+#############################
 
 # basics of game board and playing tiles
 def draw_tile(screen, value, x, y): #defining the appearance of the single tiles shown (excluding the colored tiles with numbers (2,4,8...))
@@ -50,8 +50,7 @@ def draw_board(screen, board): #defining the general board appearance
             x = MARGIN + GAP_SIZE + col * (TILE_SIZE + GAP_SIZE) #spacing between tiles
             y = MARGIN + GAP_SIZE + row * (TILE_SIZE + GAP_SIZE) #spacing between tiles
             draw_tile(screen, value, x, y)
-
-
+#############################
 # defining the main functioning parts
 def add_new_tile(board): #adding new squares with a number either 2 or 4 
     empty_tiles = [(r, c) for r in range(SIZE) for c in range(SIZE) if board[r][c] == 0] #defining empty tiles
@@ -63,13 +62,13 @@ def slide_row_left(row):
     new_row = [i for i in row if i != 0] #filter of all non-empty tiles (not 0), all elements are stored in the list
     new_row += [0] * (SIZE - len(new_row)) #adding back  0s at the end of the list to maintain the same number of tiles in the list and on the board
     for i in range(SIZE - 1): 
-        if new_row[i] == new_row[i + 1] and new_row[i] != 0: #comparing the elements next to each other and doubling the first value if equvalent, setting 2. value 0
+        if new_row[i] == new_row[i + 1] and new_row[i] != 0: #comparing the elements next to each other and doubling the first value if equivalent, setting 2. value 0
             new_row[i] *= 2 
             new_row[i + 1] = 0
-    new_row = [i for i in new_row if i != 0]
-    new_row += [0] * (SIZE - len(new_row))
+    new_row = [i for i in new_row if i != 0] #filter of all 0s
+    new_row += [0] * (SIZE - len(new_row)) #adding the 0s at the end of the list | see above
     return new_row
-def move_left(board):
+def move_left(board): #adding the merged and shifted rows to the new board
     new_board = []
     for row in board:
         new_board.append(slide_row_left(row))
@@ -77,57 +76,59 @@ def move_left(board):
 def move_right(board):
     new_board = []
     for row in board:
-        new_board.append(slide_row_left(row[::-1])[::-1])
+        new_board.append(slide_row_left(row[::-1])[::-1]) #1. reversing the order of tiles, 2. merging tiles, 3. reverse back
     return new_board
 def move_up(board):
-    new_board = list(zip(*board))
-    new_board = move_left(new_board)
-    return [list(row) for row in zip(*new_board)]
+    new_board = list(zip(*board)) #swapping row and column | note: zip returns tuples | therefore unpacking(*) and converting to list
+    new_board = move_left(new_board) #performing the merge and shift (left)
+    return [list(row) for row in zip(*new_board)] #swapping row and column back | unpack | list
 def move_down(board):
-    new_board = list(zip(*board))
-    new_board = move_right(new_board)
-    return [list(row) for row in zip(*new_board)]
+    new_board = list(zip(*board)) #swapping row and column | note: zip returns tuples | therefore unpacking(*) and converting to list
+    new_board = move_right(new_board) #performing the merge and shift (right)
+    return [list(row) for row in zip(*new_board)] #swapping row and column back | unpack | list
 
+#############################
 
-def check_win(board):
+def check_win(board): #checking for 2048 = win
     for row in board:
         if 2048 in row:
             return True
     return False
 
 def check_moves_available(board):
-    for row in range(SIZE):
-        if 0 in board[row]:
-            return True
+    for row in range(SIZE): #checking rows
+        if 0 in board[row]: #checking for empty tiles
+            return True #if row with 0: true
         for col in range(SIZE - 1):
-            if board[row][col] == board[row][col + 1]:
+            if board[row][col] == board[row][col + 1]: #checking for identical tiles next to each other (horizontal merges)
                 return True
-    for col in range(SIZE):
+    for col in range(SIZE): #checking columns
         for row in range(SIZE - 1):
-            if board[row][col] == board[row + 1][col]:
+            if board[row][col] == board[row + 1][col]: #checking for identical tiles next to each other (vertical merges)
                 return True
-    return False
+    return False #if not able to merge or empty = false
 
+#############################
 
 def main():
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("2048 Game")
-    clock = pygame.time.Clock()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) #game window
+    pygame.display.set_caption("2048 Game") #title
+    clock = pygame.time.Clock() #frame rate
 
-    board = [[0] * SIZE for _ in range(SIZE)]
-    add_new_tile(board)
-    add_new_tile(board)
+    board = [[0] * SIZE for _ in range(SIZE)] #list of 0s size times, size times | creating a grid of eg. 4x4
+    add_new_tile(board) #initializing a random tile (2/ 4)
+    add_new_tile(board) #start with two random tiles
 
     running = True
     won = False
     lost = False
 
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        for event in pygame.event.get(): #recalls previous frame
+            if event.type == pygame.QUIT: #closing game
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if not won and not lost:
+            elif event.type == pygame.KEYDOWN: #implementing the keys
+                if not won and not lost: #moving left, right, up, down
                     if event.key == pygame.K_LEFT:
                         board = move_left(board)
                     elif event.key == pygame.K_RIGHT:
@@ -136,25 +137,26 @@ def main():
                         board = move_up(board)
                     elif event.key == pygame.K_DOWN:
                         board = move_down(board)
-                    add_new_tile(board)
+                    add_new_tile(board) #after a move/ merge add new tile
                     won = check_win(board)
-                    lost = not check_moves_available(board)
+                    lost = not check_moves_available(board) #if free moves = true -> lost = false | if free moves = false -> lost = true
 
-        draw_board(screen, board)
+        draw_board(screen, board) #draw current state
 
         if won:
-            text = FONT.render("You won!", True, (255, 0, 0))
-            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-            screen.blit(text, text_rect)
+            text = FONT.render("You won!", True, (255, 0, 0)) #winning text
+            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)) #center
+            screen.blit(text, text_rect) #show text
         elif lost:
-            text = FONT.render("You lost!", True, (255, 0, 0))
-            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-            screen.blit(text, text_rect)
+            text = FONT.render("You lost!", True, (255, 0, 0)) #losing text
+            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)) #center
+            screen.blit(text, text_rect) #show text
 
-        pygame.display.flip()
-        clock.tick(30)
+        pygame.display.flip() #updating the frame
+        clock.tick(30) #30 fps
 
 
     pygame.quit()
+
 if __name__ == "__main__":
     main()
