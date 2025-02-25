@@ -50,8 +50,9 @@ def draw_board(screen, board): #defining the general board appearance
             x = MARGIN + GAP_SIZE + col * (TILE_SIZE + GAP_SIZE) #spacing between tiles
             y = MARGIN + GAP_SIZE + row * (TILE_SIZE + GAP_SIZE) #spacing between tiles
             draw_tile(screen, value, x, y)
+
 #############################
-# defining the main functioning parts
+# defining the main functioning parts – moving and adding tiles
 def add_new_tile(board): #adding new squares with a number either 2 or 4 
     empty_tiles = [(r, c) for r in range(SIZE) for c in range(SIZE) if board[r][c] == 0] #defining empty tiles
     if empty_tiles: #adding new squares only to empty tiles
@@ -89,12 +90,6 @@ def move_down(board):
 
 #############################
 
-def check_win(board): #checking for 2048 = win
-    for row in board:
-        if 2048 in row:
-            return True
-    return False
-
 def check_moves_available(board):
     for row in range(SIZE): #checking rows
         if 0 in board[row]: #checking for empty tiles
@@ -120,7 +115,6 @@ def main():
     add_new_tile(board) #start with two random tiles
 
     running = True
-    won = False
     lost = False
 
     while running:
@@ -128,7 +122,7 @@ def main():
             if event.type == pygame.QUIT: #closing game
                 running = False
             elif event.type == pygame.KEYDOWN: #implementing the keys
-                if not won and not lost: #moving left, right, up, down
+                if not lost: #moving left, right, up, down
                     if event.key == pygame.K_LEFT:
                         board = move_left(board)
                     elif event.key == pygame.K_RIGHT:
@@ -138,23 +132,17 @@ def main():
                     elif event.key == pygame.K_DOWN:
                         board = move_down(board)
                     add_new_tile(board) #after a move/ merge add new tile
-                    won = check_win(board)
                     lost = not check_moves_available(board) #if free moves = true -> lost = false | if free moves = false -> lost = true
 
         draw_board(screen, board) #draw current state
 
-        if won:
-            text = FONT.render("You won!", True, (255, 0, 0)) #winning text
-            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)) #center
-            screen.blit(text, text_rect) #show text
-        elif lost:
+        if lost:
             text = FONT.render("You lost!", True, (255, 0, 0)) #losing text
             text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)) #center
             screen.blit(text, text_rect) #show text
 
         pygame.display.flip() #updating the frame
         clock.tick(30) #30 fps
-
 
     pygame.quit()
 
