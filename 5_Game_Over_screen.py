@@ -7,14 +7,14 @@ pygame.init()
 # Fenstergröße
 width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Game Over Screen")
+pygame.display.set_caption("Ende")
 
 background = pygame.image.load("background_pong.jpg")  # Bild laden und anpassen
 background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
 white = (255, 255, 255)
-red = pygame.Color(255, 0, 0)
+red = pygame.Color(255, 0, 0)  # Rote Farbe für final_score
 
 font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
@@ -29,7 +29,6 @@ def start_screen(final_score):
         "Digga, dein Versagen kotzt mich an.: Vallah!",
         "Du hast verloren.: Geh nach Hause.",
         "Du hast schwach angefangen.: Dann stark nachgelassen!",
-        "Gamer?: Eher Game Over!",
         "Loooooooser!!!",
         "Digga, was war das?!",
         "Spielst du mit den Füßen oder wat?",
@@ -66,9 +65,16 @@ def start_screen(final_score):
     while running:
         screen.blit(background, (0, 0))
 
-        # Titel
-        title_text = font_title.render("Game Over!", True, red)
-        screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 150))  # Titel bleibt unverändert
+        # Zeile für den final_score
+        score_text = f"Endpunktestand:! {final_score}"
+
+        # Zeilenumbruch in `score_text` einfügen
+        score_lines = score_text.split("! ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
+        score_y = 100  # Startposition für die erste Zeile
+        for line in score_lines:
+            score_part = font_title.render(line, True, red)
+            screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
+            score_y += 60  # Vertikaler Abstand für die nächste Zeile
 
         # Nachricht anzeigen (verschoben)
         for i, part in enumerate(parts):
@@ -77,7 +83,7 @@ def start_screen(final_score):
 
         # Start Button (verschoben)
         pygame.draw.rect(screen, white, start_button)
-        button_text = font.render("Start", True, (0, 0, 0))
+        button_text = font.render("Restart", True, (0, 0, 0))
         screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 110))  # Start-Button weiter nach unten verschoben
 
         pygame.display.flip()
