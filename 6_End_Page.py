@@ -14,7 +14,7 @@ background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
 white = (255, 255, 255)
-red = pygame.Color(255, 0, 0)  # Rote Farbe für final_score
+green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_score
 
 font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
@@ -65,9 +65,16 @@ def start_screen(final_score):
     while running:
         screen.blit(background, (0, 0))
 
-        # Zeige den final_score oben an
-        score_text = font_title.render(f"Endpunktestand: {final_score}", True, red)
-        screen.blit(score_text, (width / 2 - score_text.get_width() / 2, 150))  # Final Score in der Mitte oben anzeigen
+        # Zeile für den final_score
+        score_text = f"Endpunktestand:! {final_score}"
+
+        # Zeilenumbruch in `score_text` einfügen
+        score_lines = score_text.split("! ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
+        score_y = 100  # Startposition für die erste Zeile
+        for line in score_lines:
+            score_part = font_title.render(line, True, green)
+            screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
+            score_y += 60  # Vertikaler Abstand für die nächste Zeile
 
         # Nachricht anzeigen (verschoben)
         for i, part in enumerate(parts):
@@ -76,7 +83,7 @@ def start_screen(final_score):
 
         # Start Button (verschoben)
         pygame.draw.rect(screen, white, start_button)
-        button_text = font.render("Start", True, (0, 0, 0))
+        button_text = font.render("Restart", True, (0, 0, 0))
         screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 110))  # Start-Button weiter nach unten verschoben
 
         pygame.display.flip()
@@ -88,7 +95,7 @@ def start_screen(final_score):
             if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
                 running = False
 
-start_screen(10)  # Beispielaufruf mit einem final_score von 150
+start_screen(150)  # Beispielaufruf mit einem final_score von 150
 
 # Weiteres Spiel starten
 os.system("python 1_First_Page_generall.py")
