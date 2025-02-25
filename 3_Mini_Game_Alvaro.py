@@ -7,7 +7,7 @@ pygame.init()
 SIZE = 4
 TILE_SIZE = 127.5
 GAP_SIZE = 10
-MARGIN = 20
+MARGIN = 45
 SCREEN_SIZE = SIZE * TILE_SIZE + (SIZE + 1) * GAP_SIZE + 2 * MARGIN
 SCREEN_WIDTH = SCREEN_SIZE
 SCREEN_HEIGHT = SCREEN_SIZE
@@ -62,31 +62,40 @@ def add_new_tile(board): #adding new squares with a number either 2 or 4
 def slide_row_left(row):
     new_row = [i for i in row if i != 0] #filter of all non-empty tiles (not 0), all elements are stored in the list
     new_row += [0] * (SIZE - len(new_row)) #adding back  0s at the end of the list to maintain the same number of tiles in the list and on the board
-    for i in range(SIZE - 1): 
+    score_2048 = 0
+    for i in range(SIZE - 1):
         if new_row[i] == new_row[i + 1] and new_row[i] != 0: #comparing the elements next to each other and doubling the first value if equivalent, setting 2. value 0
-            new_row[i] *= 2 
+            new_row[i] *= 2
+            score_2048 += new_row[i]  # Update score
             new_row[i + 1] = 0
     new_row = [i for i in new_row if i != 0] #filter of all 0s
     new_row += [0] * (SIZE - len(new_row)) #adding the 0s at the end of the list | see above
-    return new_row
+    return new_row, score_2048
+
 def move_left(board): #adding the merged and shifted rows to the new board
     new_board = []
+    partial_score_2048 = 0
     for row in board:
-        new_board.append(slide_row_left(row))
-    return new_board
+        new_row, score_2048 = slide_row_left(row)
+        new_board.append(new_row)
+        partial_score_2048 += score_2048
+    return new_board, partial_score_2048
 def move_right(board):
     new_board = []
+    partial_score_2048 = 0
     for row in board:
-        new_board.append(slide_row_left(row[::-1])[::-1]) #1. reversing the order of tiles, 2. merging tiles, 3. reverse back
-    return new_board
+        new_row, score_2048 = slide_row_left(row[::-1])  # Get the new row and score
+        new_board.append(new_row[::-1])  # Reverse the new row back to the original order
+        partial_score_2048 += score_2048
+    return new_board, partial_score_2048
 def move_up(board):
     new_board = list(zip(*board)) #swapping row and column | note: zip returns tuples | therefore unpacking(*) and converting to list
-    new_board = move_left(new_board) #performing the merge and shift (left)
-    return [list(row) for row in zip(*new_board)] #swapping row and column back | unpack | list
+    new_board, partial_score_2048 = move_left(new_board) #performing the merge and shift (left)
+    return [list(row) for row in zip(*new_board)], partial_score_2048 #swapping row and column back | unpack | list
 def move_down(board):
     new_board = list(zip(*board)) #swapping row and column | note: zip returns tuples | therefore unpacking(*) and converting to list
-    new_board = move_right(new_board) #performing the merge and shift (right)
-    return [list(row) for row in zip(*new_board)] #swapping row and column back | unpack | list
+    new_board, partial_score_2048 = move_right(new_board) #performing the merge and shift (right)
+    return [list(row) for row in zip(*new_board)], partial_score_2048 #swapping row and column back | unpack | list
 
 #############################
 
@@ -110,12 +119,13 @@ def main():
     pygame.display.set_caption("2048 Game") #title
     clock = pygame.time.Clock() #frame rate
 
-    board = [[0] * SIZE for _ in range(SIZE)] #list of 0s size times, size times | creating a grid of eg. 4x4
+    board = [[0] * SIZE for _ in range(SIZE)] #list of 0s size times, size times | creating a grid of e.g. 4x4
     add_new_tile(board) #initializing a random tile (2/ 4)
     add_new_tile(board) #start with two random tiles
 
     running = True
     lost = False
+    total_score_2048 = 0
 
     while running:
         for event in pygame.event.get(): #recalls previous frame
@@ -124,13 +134,14 @@ def main():
             elif event.type == pygame.KEYDOWN: #implementing the keys
                 if not lost: #moving left, right, up, down
                     if event.key == pygame.K_LEFT:
-                        board = move_left(board)
+                        board, score_increment_2048 = move_left(board)
                     elif event.key == pygame.K_RIGHT:
-                        board = move_right(board)
+                        board, score_increment_2048 = move_right(board)
                     elif event.key == pygame.K_UP:
-                        board = move_up(board)
+                        board,score_increment_2048 = move_up(board)
                     elif event.key == pygame.K_DOWN:
-                        board = move_down(board)
+                        board, score_increment_2048 = move_down(board)
+                    total_score_2048 += score_increment_2048
                     add_new_tile(board) #after a move/ merge add new tile
                     lost = not check_moves_available(board) #if free moves = true -> lost = false | if free moves = false -> lost = true
 
@@ -140,6 +151,10 @@ def main():
             text = FONT.render("You lost!", True, (255, 0, 0)) #losing text
             text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)) #center
             screen.blit(text, text_rect) #show text
+
+        score_text = FONT.render(f"Score: {total_score_2048}", True, (0, 0, 0)) # Display the score
+        score_x = SCREEN_WIDTH - MARGIN - score_text.get_width()  # Calculate x position for top right
+        screen.blit(score_text, (score_x, 0))  # Display score
 
         pygame.display.flip() #updating the frame
         clock.tick(30) #30 fps
