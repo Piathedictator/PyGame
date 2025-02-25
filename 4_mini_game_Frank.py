@@ -11,18 +11,24 @@ white = pygame.Color(255, 255, 255)
 red = pygame.Color(255, 0, 0)
 green = pygame.Color(0, 255, 0)
 blue = pygame.Color(0, 0, 255)
+TEXT_COLOR = black
 
 # Initialisierung von Pygame
+
 pygame.init()
+pygame.font.init()
 
-# Spielfeldgröße und Laden des Hintergrundbildes
+font = pygame.font.Font(None, 36)
+size = 36
+
+# Spielfeldgröße und Laden des Hintergrundbildes, Game_Over_screens
 WIDTH, HEIGHT = 600, 600
-GRID_SIZE = 20
-BACKGROUND_IMAGE = pygame.image.load("Synthwave.jpg")  # Hintergrundbild laden
+GRID_SIZE = 10
+BACKGROUND_IMAGE = pygame.image.load("BackSnake.jpg")  # Hintergrundbild laden
 BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))
+GAMEOVER_IMAGE = pygame.image.load("background_pong.jpg")  # Game Over Bild laden
+GAMEOVER_IMAGE = pygame.transform.scale(GAMEOVER_IMAGE, (WIDTH, HEIGHT))
 
-FOOD_COLOR = (255, 0, 0)
-TEXT_COLOR = (255, 255, 255)
 
 # Fenster erstellen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -90,7 +96,7 @@ def draw_score():
     screen.blit(score_text, (10, 10))
 
 def game_over():
-    screen.fill((0, 0, 0, 180))  # Dunkler Overlay für Lesbarkeit
+    screen.blit(GAMEOVER_IMAGE, (0, 0))  # Game Over Hintergrundbild einblenden
     message = random.choice(game_over_messages)
     lines = message.split(". ")  # Zeilenumbruch an Punkt und Leerzeichen
     y_offset = HEIGHT // 2 - (len(lines) * 20)  # Mittig ausrichten
@@ -146,12 +152,12 @@ while True:
     if direction == 'RIGHT':
         snake_position[0] += 10
 
-    # Snake body growing mechanism
-    # if fruits and snakes collide then scores
-    # will be incremented by 10
+    # Wachstumsmechanismus der Schlange
+    # Wenn Früchte und Schlange kolldieren, dann score
+    # Erhöhung des Scores um 10
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
-        score += 10
+        score += 10 
         fruit_spawn = False
     else:
         snake_body.pop()
@@ -167,10 +173,10 @@ while True:
 
     # Die Schlange und das Obst zeichnen
     for pos in snake_body:
-        pygame.draw.rect(screen, green,
+        pygame.draw.rect(screen, blue,
                          pygame.Rect(pos[0], pos[1], 10, 10))
-    pygame.draw.rect(screen, white, pygame.Rect(
-        fruit_position[0], fruit_position[1], 10, 10))
+    #Obst Farbe und Größe einstellen
+    pygame.draw.rect(screen, red, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
     # Game Over conditions
     if snake_position[0] < 0 or snake_position[0] > WIDTH-10:
