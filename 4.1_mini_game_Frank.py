@@ -11,6 +11,8 @@ white = pygame.Color(255, 255, 255)
 red = pygame.Color(255, 0, 0)
 green = pygame.Color(0, 255, 0)
 blue = pygame.Color(0, 0, 255)
+yellow = pygame.Color(255, 255, 0)
+orange = pygame.Color(255, 165, 0)
 TEXT_COLOR = black
 
 # Initialisierung von Pygame
@@ -64,7 +66,7 @@ score = 0
 # displaying Score function
 def show_score(choice, color, font, size):
     # creating font object score_font
-    score_font = pygame.font.SysFont(font, size)
+    score_font = pygame.font.SysFont(None, 36)
     # create the display surface object 
     # score_surface
     score_surface = score_font.render('Score : ' + str(score), True, color)
@@ -177,7 +179,7 @@ while True:
         pygame.draw.rect(screen, blue,
                          pygame.Rect(pos[0], pos[1], 10, 10))
     #Obst Farbe und Größe einstellen
-    pygame.draw.rect(screen, red, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
+    pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
     # Game Over conditions
     if snake_position[0] < 0 or snake_position[0] > WIDTH-10:

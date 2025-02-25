@@ -23,7 +23,7 @@ info_font = pygame.font.Font(None, 30)
 # Info-Symbol
 info_button = pygame.Rect(width / 2 - 15, height/2 + 75, 30, 30)
 info_visible = False
-info_text = ["Steuere die Snake mit den Pfeiltasten.", "Verschlinge die Früchte und sammele Punkte."]
+info_text = ["Steuere die Schlange mit den Pfeiltasten.", "Verschlinge die Früchte und sammele Punkte."]
 def start_screen():
     global info_visible
     start_button = pygame.Rect(width / 2 - 75, height / 2, 150, 50)
