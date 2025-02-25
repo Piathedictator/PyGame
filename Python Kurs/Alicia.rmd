@@ -1,5 +1,0 @@
-options(max.print = 1000000)
-setwd("C:/Users/herrm/Downloads/UKDA-6614-spss/spss/spss25/ukhls")
-
-if (!require(dplyr)) install.packages("dplyr")
-library(dplyr)
