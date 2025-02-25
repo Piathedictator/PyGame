@@ -79,16 +79,17 @@ font = pygame.font.Font(None, 36)
 
 # Game Over Nachrichten
 game_over_messages = [
-    "Das ist ja nicht so gut gelaufen. Probier's nochmal!",
-    "Anfängerfehler. Jetzt streng dich mal an!",
-    "Hätte hätte Snake Game Kette. Da machste nix, probier's nochmal!",
-    "Digga, dein Versagen kotzt mich an. Vallah!",
-    "Du hast verloren. Geh nach Hause.",
-    "Du hast schwach angefangen. Dann stark nachgelassen!",
-    "Gamer? Eher Game Over!",
-    "Schlangemörder!",
+    "Das ist ja nicht so gut gelaufen.: Probier's nochmal!",
+    "Anfängerfehler.: Jetzt streng dich mal an!",
+    "Hätte hätte Snake Game Kette.: Da machste nix, probier's nochmal!",
+    "Digga, dein Versagen kotzt mich an.: Vallah!",
+    "Du hast verloren.: Geh nach Hause.",
+    "Du hast schwach angefangen.: Dann stark nachgelassen!",
+    "Gamer?: Eher Game Over!",
+    "Loooooooser!!!",
     "Digga, was war das?!",
-    "Spielst du mit den Füßen oder wat?"
+    "Spielst du mit den Füßen oder wat?",
+    "Liegt dein Versagen am Spiel?: Ich denke nicht."
 ]
 
 def draw_score():
@@ -98,7 +99,7 @@ def draw_score():
 def game_over():
     screen.blit(GAMEOVER_IMAGE, (0, 0))  # Game Over Hintergrundbild einblenden
     message = random.choice(game_over_messages)
-    lines = message.split(". ")  # Zeilenumbruch an Punkt und Leerzeichen
+    lines = message.split(": ")  # Zeilenumbruch an Punkt und Leerzeichen
     y_offset = HEIGHT // 2 - (len(lines) * 20)  # Mittig ausrichten
     for line in lines:
         game_over_text = font.render(line, True, TEXT_COLOR)
