@@ -5,7 +5,7 @@ pygame.init()
 # set basic variables
 #variables for screen size
 SIZE = 4
-TILE_SIZE = 100
+TILE_SIZE = 127.5
 GAP_SIZE = 10
 MARGIN = 20
 SCREEN_SIZE = SIZE * TILE_SIZE + (SIZE + 1) * GAP_SIZE + 2 * MARGIN
