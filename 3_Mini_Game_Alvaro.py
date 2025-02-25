@@ -66,9 +66,13 @@ def slide_row_left(row):
     score_2048 = 0
     for i in range(SIZE - 1):
         if new_row[i] == new_row[i + 1] and new_row[i] != 0: #comparing the elements next to each other and doubling the first value if equivalent, setting 2. value 0
+            if new_row[i] == 2048:  # If the tile is already 2048, it cannot merge
+                continue
             new_row[i] *= 2
             score_2048 += new_row[i]  # Update score
             new_row[i + 1] = 0
+            if new_row[i] == 2048:  # Check if it becomes 2048
+                score_2048 += 1000  # Add bonus for reaching 2048
     new_row = [i for i in new_row if i != 0] #filter of all 0s
     new_row += [0] * (SIZE - len(new_row)) #adding the 0s at the end of the list | see above
     return new_row, score_2048

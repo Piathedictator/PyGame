@@ -74,4 +74,4 @@ def start_screen():
 start_screen()
 
 import os
-os.system("python 2.1_Mini_Game_Pia.py")
+os.system("python3 2.1_Mini_Game_Pia.py")
