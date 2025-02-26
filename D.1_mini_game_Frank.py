@@ -49,7 +49,7 @@ def draw_score():
 # Game Over Funktion
 def game_over():
     pygame.quit()  # Pygame beenden
-    os.system("start 6_End_Page.py")
+    os.system("python F_End_Page.py")
     
     
 
