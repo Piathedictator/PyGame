@@ -1,6 +1,5 @@
 import pygame
 import random
-import math
 pygame.init()
 
 # set basic variables
@@ -131,7 +130,6 @@ def main():
     running = True
     lost = False
     total_score_2048 = 0
-    merge_score_2048 = 0
     score_increment_2048 = 0
 
     while running:
