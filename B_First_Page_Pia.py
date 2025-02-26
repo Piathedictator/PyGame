@@ -11,7 +11,7 @@ pygame.display.set_caption("Pong - Startseite")
 #Player Name aus Skript übernehmen
 player_name = sys.argv[1] if len(sys.argv) > 1 else "Player"
 
-background = pygame.image.load("background_pong.jpg")  # Bild laden
+background = pygame.image.load("Z_background_pong.jpg")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Farben

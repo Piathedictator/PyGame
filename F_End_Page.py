@@ -9,7 +9,7 @@ width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Ende")
 
-background = pygame.image.load("background_pong.jpg")  # Bild laden und anpassen
+background = pygame.image.load("Z_background_pong.jpg")  # Bild laden und anpassen
 background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
