@@ -68,7 +68,7 @@ def start_screen():
             #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
-                    os.system(f"python 2_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
+                    os.system(f"python3 2_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
                     return
             #Info Button mit Maus aktivieren:
             if event.type == pygame.MOUSEMOTION:

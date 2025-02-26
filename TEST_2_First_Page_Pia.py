@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 import os
 
@@ -68,7 +70,10 @@ def start_screen(info_text, next_file):
                 info_visible = info_button.collidepoint(event.pos)
 
     # Open the next file after the start screen is closed
-    os.system(f"python3 {next_file}")
+    if sys.version_info.major==3:
+        os.system(f"python3 {next_file}")
+    else:
+        os.system(f"python {next_file}")
 
 
 if __name__ == "__main__":
