@@ -21,45 +21,54 @@ font_instruction = pygame.font.Font(None, 30)
 
 # UI-Elemente
 input_box = pygame.Rect(width / 2 - 100, 250, 200, 40)
-start_button = pygame.Rect(width / 2 - 75, 350, 150, 50)
+start_button = pygame.Rect(width / 2 - 100, 350, 200, 50)
 info_button = pygame.Rect(width / 2 - 15, 420, 30, 30)
 info_visible, player_name = False, ""
-info_text = ["Spiele dich durch drei Mini-Spiele und sammle Punkte!"]
+info_text = [
+    "Spiele dich durch drei Mini-Spiele",
+    "        und sammle Punkte!",
+    ]
 
 def start_screen():
     global info_visible, player_name
     while True:
-        screen.blit(background, (0, 0))
-        screen.blit(font_titel.render("Let's Play Python", True, pink), (width / 2 - 180, 150))
-        screen.blit(font_instruction.render("Gib deinen Spielernamen ein:", True, pink), (width / 2 - 140, 220))
+        screen.blit(background, (0, 0)) # Hintergrund
+        #Texte:
+        titel_text = font_titel.render("Let's Play Python", True, pink)
+        screen.blit(titel_text, (width / 2 - (titel_text.get_width()/2), 150))
+        eingabe_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
+        screen.blit(eingabe_text, (width / 2 - (eingabe_text.get_width()/2), 220))
+        #Boxen: 
         pygame.draw.rect(screen, white, input_box)
         screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
         pygame.draw.rect(screen, white, start_button)
         screen.blit(font.render("Start Spiel", True, black), (start_button.x + 10, start_button.y + 10))
+        #Info Button:
         pygame.draw.circle(screen, blue, info_button.center, 15)
         screen.blit(font.render("i", True, white), (info_button.x + 10, info_button.y))
         if info_visible:
-            screen.blit(font_instruction.render(info_text[0], True, white), (width / 2 - 200, 460))
+            for i, line in enumerate(info_text):
+                text_surface = font_instruction.render(line, True, white)
+                screen.blit(text_surface, (width/ 2 - text_surface.get_width()/2, (height/2 +160) + i * 20))
         pygame.display.flip()
         
         for event in pygame.event.get():
+            #Screen beenden wenn Quit
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            #Tasteneingaben speichern
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     player_name = player_name[:-1]
-                elif event.key == pygame.K_RETURN and player_name:
-                    os.system(f"python 2_First_Page_Pia.py '{player_name}'")
-                    return
                 else:
                     player_name += event.unicode
+            #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
                     os.system(f"python 2_First_Page_Pia.py '{player_name}'")
                     return
-                if info_button.collidepoint(event.pos):
-                    info_visible = not info_visible
+            #Info Button mit Maus aktivieren:
             if event.type == pygame.MOUSEMOTION:
                 info_visible = info_button.collidepoint(event.pos)
 
