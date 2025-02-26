@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 
 pygame.init()
 
@@ -26,17 +27,12 @@ info_font = pygame.font.Font(None, 30)
 
 # Info-Symbol
 info_button = pygame.Rect(width / 2 - 15, height/2 + 75, 30, 30)
-info_visible = False
-info_text = [
-    "Steuere den Schläger mit den Pfeiltasten.",
-    "Halte den Ball im Spiel und sammle Punkte.",
-    "Drücke den Start-Button, um zu beginnen.",
-]
 
-def start_screen():
-    global info_visible
+def start_screen(info_text, next_file):
+    info_visible = False
     start_button = pygame.Rect(width / 2 - 75, height / 2, 150, 50)
     running = True
+    
     while running:
         screen.blit(background, (0, 0))
         
@@ -75,7 +71,15 @@ def start_screen():
             if event.type == pygame.MOUSEMOTION:
                 info_visible = info_button.collidepoint(event.pos)
 
-start_screen()
+    command = "python3" if sys.platform != "win32" else "python"
+    os.system(f"{command} {next_file}")
 
-import os
-os.system("python 2.1_Mini_Game_Pia.py")
+if __name__ == "__main__":
+    default_info_text = [
+        "Steuere den Schläger mit den Pfeiltasten.",
+        "Halte den Ball im Spiel und sammle Punkte.",
+        "Drücke den Start-Button, um zu beginnen.",
+        ]
+
+
+start_screen(default_info_text, "B.1_Mini_Game_Pia.py")

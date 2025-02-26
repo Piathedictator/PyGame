@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong_Game")
 
 # Hintergrundbild:
-background = pygame.image.load("background_pong.jpg")  # Bild laden
+background = pygame.image.load("Z_background_pong.jpg")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Variablen:
@@ -110,3 +110,7 @@ while running:
     clock.tick(60)  # 60 FPS
 
 pygame.quit()
+
+import os
+command = "python3" if sys.platform != "win32" else "python"
+os.system(f"{command} C_First_Page_2048.py")

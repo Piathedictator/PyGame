@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 import os
 
@@ -10,7 +9,7 @@ width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong - Startseite")
 
-background = pygame.image.load("background_pong.jpg")  # Bild laden
+background = pygame.image.load("Z_background_pong.jpg")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Farben
@@ -81,4 +80,5 @@ if __name__ == "__main__":
         "Steuere den Schläger mit den Pfeiltasten.",
         "Halte den Ball im Spiel und sammle Punkte.",
     ]
-    start_screen(default_info_text, "2.1_Mini_Game_Pia.py")  # Replace with your actual file name
+
+start_screen(default_info_text, "B.1_Mini_Game_Pia.py")  # Replace with your actual file name

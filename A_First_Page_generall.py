@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Startseite_Python_Game")
 
 # Hintergrundbild
-background = pygame.image.load("start_image.jpg")
+background = pygame.image.load("Z_start_image.jpg")
 background = pygame.transform.scale(background, (width, height))
 
 # Farben & Schriftarten
@@ -68,10 +68,12 @@ def start_screen():
             #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
-                    os.system(f"python3 2_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
+                    command = "python3" if sys.platform != "win32" else "python"
+                    os.system(f"{command} B_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
                     return
             #Info Button mit Maus aktivieren:
             if event.type == pygame.MOUSEMOTION:
                 info_visible = info_button.collidepoint(event.pos)
 
 start_screen()
+
