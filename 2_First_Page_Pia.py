@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 pygame.init()
 
@@ -6,6 +7,9 @@ pygame.init()
 width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong - Startseite")
+
+#Player Name aus Skript übernehmen
+player_name = sys.argv[1] if len(sys.argv) > 1 else "Player"
 
 background = pygame.image.load("background_pong.jpg")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
@@ -17,7 +21,7 @@ gray = (180, 180, 180)
 
 # Schriftart
 font = pygame.font.Font(None, 50)
-font_instruction = pygame.font.Font(None, 30)
+font_instruction = pygame.font.Font(None, 40)
 info_font = pygame.font.Font(None, 30)
 
 # Info-Symbol
@@ -26,22 +30,22 @@ info_visible = False
 info_text = [
     "Steuere den Schläger mit den Pfeiltasten.",
     "Halte den Ball im Spiel und sammle Punkte.",
+    "Drücke den Start-Button, um zu beginnen.",
 ]
 
 def start_screen():
     global info_visible
     start_button = pygame.Rect(width / 2 - 75, height / 2, 150, 50)
     running = True
-    
     while running:
         screen.blit(background, (0, 0))
         
         #Titel:
-        title_text = font.render("Willkommen zu Pong!", True, white)
+        title_text = font.render(f"Hallo {player_name}!", True, white)
         screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 150))
 
         #Instuction Text:
-        instructions_text = font_instruction.render("Drücke den Start-Button, um zu spielen.", True, white)
+        instructions_text = font_instruction.render("Das erste Spiel ist Pong", True, white)
         screen.blit(instructions_text, (width / 2 - instructions_text.get_width() / 2, 200))
         
         #Start Button

@@ -38,11 +38,13 @@ def start_screen():
         screen.blit(titel_text, (width / 2 - (titel_text.get_width()/2), 150))
         eingabe_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
         screen.blit(eingabe_text, (width / 2 - (eingabe_text.get_width()/2), 220))
+
         #Boxen: 
         pygame.draw.rect(screen, white, input_box)
         screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
         pygame.draw.rect(screen, white, start_button)
         screen.blit(font.render("Start Spiel", True, black), (start_button.x + 10, start_button.y + 10))
+
         #Info Button:
         pygame.draw.circle(screen, blue, info_button.center, 15)
         screen.blit(font.render("i", True, white), (info_button.x + 10, info_button.y))
@@ -66,7 +68,7 @@ def start_screen():
             #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
-                    os.system(f"python 2_First_Page_Pia.py '{player_name}'")
+                    os.system(f"python 2_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
                     return
             #Info Button mit Maus aktivieren:
             if event.type == pygame.MOUSEMOTION:
