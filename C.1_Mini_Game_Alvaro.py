@@ -1,6 +1,5 @@
 import pygame
 import random
-import math
 pygame.init()
 
 # set basic variables
@@ -131,7 +130,7 @@ def main():
     running = True
     lost = False
     total_score_2048 = 0
-    merge_score_2048 = 0
+    score_increment_2048 = 0
 
     while running:
         for event in pygame.event.get(): #recalls previous frame
@@ -147,8 +146,7 @@ def main():
                         board,score_increment_2048 = move_up(board)
                     elif event.key == pygame.K_DOWN:
                         board, score_increment_2048 = move_down(board)
-                    total_score_2048 += math.floor(score_increment_2048/100)
-                    merge_score_2048 += score_increment_2048
+                    total_score_2048 += round(score_increment_2048 * 0.1)
                     add_new_tile(board) #after a move/ merge add new tile
                     lost = not check_moves_available(board) #if free moves = true -> lost = false | if free moves = false -> lost = true
 
@@ -162,9 +160,6 @@ def main():
         total_score_2048_text = FONT.render(f"Score: {total_score_2048}", True, (0, 0, 0)) # Display the score
         total_score_2048_x = SCREEN_WIDTH - MARGIN - total_score_2048_text.get_width()  # Calculate x position for top right
         screen.blit(total_score_2048_text, (total_score_2048_x, 0))  # Display score
-
-        merge_score_2048_text = FONT.render(f"Merge number: {merge_score_2048}", True, (0, 0, 0)) # Display the score
-        screen.blit(merge_score_2048_text, (MARGIN, 0))  # Display score
 
         pygame.display.flip() #updating the frame
         clock.tick(30) #30 fps
