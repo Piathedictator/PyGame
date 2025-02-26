@@ -1,5 +1,7 @@
 import pygame
 import random
+import sys
+import os
 
 pygame.init()
 
@@ -111,6 +113,5 @@ while running:
 
 pygame.quit()
 
-import os
 command = "python3" if sys.platform != "win32" else "python"
 os.system(f"{command} C_First_Page_2048.py")
