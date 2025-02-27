@@ -17,9 +17,9 @@ orange = pygame.Color(255, 165, 0)
 # Spielfeldgröße und Hintergrundbild
 WIDTH, HEIGHT = 600, 600
 GRID_SIZE = 10
-BACKGROUND_IMAGE = pygame.image.load("BackSnake.jpg")  # Hintergrundbild laden
+BACKGROUND_IMAGE = pygame.image.load("Z_BackSnake.jpg")  # Hintergrundbild laden
 BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))
-GAMEOVER_IMAGE = pygame.image.load("background_pong.jpg")  # Game Over Bild laden
+GAMEOVER_IMAGE = pygame.image.load("Z_background_pong.jpg")  # Game Over Bild laden
 GAMEOVER_IMAGE = pygame.transform.scale(GAMEOVER_IMAGE, (WIDTH, HEIGHT))
 
 # Fenster erstellen

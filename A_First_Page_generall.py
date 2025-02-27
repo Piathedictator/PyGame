@@ -40,7 +40,7 @@ def start_screen():
         eingabe_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
         screen.blit(eingabe_text, (width / 2 - (eingabe_text.get_width()/2), 220))
 
-        #Boxen: 
+        #Boxen:
         pygame.draw.rect(screen, white, input_box)
         screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
         pygame.draw.rect(screen, white, start_button)
@@ -54,7 +54,7 @@ def start_screen():
                 text_surface = font_instruction.render(line, True, white)
                 screen.blit(text_surface, (width/ 2 - text_surface.get_width()/2, (height/2 +160) + i * 20))
         pygame.display.flip()
-        
+
         for event in pygame.event.get():
             #Screen beenden wenn Quit
             if event.type == pygame.QUIT:
@@ -69,7 +69,7 @@ def start_screen():
             #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
-                    save_game_score(player_name, 0, 0, 0)
+                    save_game_score(player_name)
                     command = "python3" if sys.platform != "win32" else "python"
                     os.system(f"{command} B_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
                     return
@@ -78,4 +78,3 @@ def start_screen():
                 info_visible = info_button.collidepoint(event.pos)
 
 start_screen()
-

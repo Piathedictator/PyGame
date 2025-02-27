@@ -2,6 +2,8 @@ import pygame
 import random
 import sys
 import os
+import csv
+from G_Game_Scores import save_game_score
 
 pygame.init()
 
@@ -36,7 +38,7 @@ def create_obstacle():
     return pygame.Rect(x, y, 50, 20)
 
 # Spielschleife
-score = 0
+score_pong = 0
 running = True
 clock = pygame.time.Clock()
 
@@ -66,9 +68,9 @@ while running:
     # Ball-Kollision mit oberer Wand (Score)
     if ball.top <= 0:
         ball_speed_y *= -1
-        score += 1
+        score_pong += 1
 
-        if score % 2 == 0:
+        if score_pong % 2 == 0:
             obstacles.append(create_obstacle())  # Alle 2 Scores wird Hinderniss erstellt
     
     # Ball-Kollision mit Hindernissen:
@@ -85,7 +87,7 @@ while running:
 
     # Wenn der Ball unten verschwindet → Game Over
     if ball.bottom >= height:
-        print(f"Game Over! Dein Score: {score}")
+        print(f"Game Over! Dein Score: {score_pong}")
         running = False
 
     # Visualisierung:
@@ -105,11 +107,14 @@ while running:
         pygame.draw.rect(screen, obstacle_colour, obstacle)
 
     # Score anzeigen:
-    score_text = font.render(f"Score: {score}", True, white)
+    score_text = font.render(f"Score: {score_pong}", True, white)
     screen.blit(score_text, (width // 2 - 30, 20))
 
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
+
+    # player_name = sys.argv[:-1] if len(sys.argv) > 1 else "Player"
+    save_game_score({'Pong': score_pong})
 
 pygame.quit()
 
