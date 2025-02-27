@@ -1,20 +1,13 @@
 import csv
 import os
 
-from A_First_Page_generall import player_name
-from B
-def save_game_score(player_name, game_name, score):
+
+def save_game_score(player_name, Total_Game_Score):
     file_name = 'Storage_Game_Score.csv'  # Define the CSV file name
     file_exists = os.path.isfile(file_name)  # Check if the file exists
 
     # Create a new row for the player and their score
-    new_row = {
-        'player_name': player_name,
-        'Pong': 0,
-        '2048': 0,
-        'Snake': 0
-    }
-    new_row[game_name] = score  # Set the score for the specific game
+    new_row = {'player_name': player_name, Total_Game_Score: 0}
 
     # Write the new row to the CSV file
     with open(file_name, mode='a', newline='') as file:  # Open in append mode
