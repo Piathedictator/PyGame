@@ -1,25 +1,24 @@
 import csv
 import os
 
-def save_game_score(player, scores=None):
+from A_First_Page_generall import player_name
+from B
+def save_game_score(player_name, game_name, score):
     file_name = 'Storage_Game_Score.csv'  # Define the CSV file name
-    file_exists = os.path.isfile(file_name)  # Check if the file exists to determine the mode
+    file_exists = os.path.isfile(file_name)  # Check if the file exists
 
-    # Initialize scores dictionary if not provided
-    if scores is None:
-        scores = {'Pong': 0, '2048': 0, 'Snake': 0}
+    # Create a new row for the player and their score
+    new_row = {
+        'player_name': player_name,
+        'Pong': 0,
+        '2048': 0,
+        'Snake': 0
+    }
+    new_row[game_name] = score  # Set the score for the specific game
 
-    # Open the file in append mode, create it if it doesn't exist
-    with open(file_name, mode='w', newline='') as file:
-        writer = csv.writer(file)
-
+    # Write the new row to the CSV file
+    with open(file_name, mode='a', newline='') as file:  # Open in append mode
+        writer = csv.DictWriter(file, fieldnames=['player_name', 'Pong', '2048', 'Snake'])
         if not file_exists:  # Write the header only if the file is new
-            writer.writerow(['player_name', 'Pong', '2048', 'Snake'])
-
-        # Write the player's score, using the provided scores or default values
-        writer.writerow([
-            player,
-            scores.get('Pong', 0),
-            scores.get('2048', 0),
-            scores.get('Snake', 0)
-        ])
+            writer.writeheader()
+        writer.writerow(new_row)  # Write the new player's score

@@ -7,6 +7,8 @@ from G_Game_Scores import save_game_score
 
 pygame.init()
 
+player_name = sys.argv[:-1] if len(sys.argv) > 1 else "Player"
+
 # Fenstergröße
 width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
@@ -89,6 +91,9 @@ while running:
     if ball.bottom >= height:
         print(f"Game Over! Dein Score: {score_pong}")
         running = False
+        # Save the player's score to the CSV file
+        game_name = "Pong"  # Specify the game name
+        save_game_score(player_name, game_name, score_pong)  # Save the score
 
     # Visualisierung:
     white = (255, 255, 255)
@@ -112,9 +117,6 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
-
-    # player_name = sys.argv[:-1] if len(sys.argv) > 1 else "Player"
-    save_game_score({'Pong': score_pong})
 
 pygame.quit()
 

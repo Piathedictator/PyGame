@@ -69,7 +69,7 @@ def start_screen():
             #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
-                    save_game_score(player_name)
+                    save_game_score(player_name, 0,0)
                     command = "python3" if sys.platform != "win32" else "python"
                     os.system(f"{command} B_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
                     return
