@@ -168,3 +168,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import os
+import sys
+
+command = "python3" if sys.platform != "win32" else "python"
+os.system(f"{command} D_First_Page_Snake.py")
