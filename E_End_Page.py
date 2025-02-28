@@ -3,14 +3,9 @@ import random
 import os
 import sys
 
-from C_First_Page_2048 import score_pong  # Import der Funktion, aber kein automatischer Aufruf mehr!
-from D_First_Page_Snake import total_score_2048  # Import der Funktion, aber kein automatischer Aufruf mehr!
-from D_mini_game_Frank import finale_score_snake  # Import der Funktion, aber kein automatischer Aufruf mehr!
-
-
-score_pong = sys.argv[1] if len(sys.argv) > 1 else "0"
-total_score_2048 = sys.argv[1] if len(sys.argv) > 1 else "0"
-finale_score_snake= sys.argv[1] if len(sys.argv) > 1 else "0"
+score_pong = sys.argv[1] if len(sys.argv) > 1 else 0
+total_score_2048 = sys.argv[2] if len(sys.argv) > 1 else 0
+final_score_snake = sys.argv[3] if len(sys.argv) > 1 else 0
 
 pygame.init()
 
@@ -30,7 +25,7 @@ font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
 font_instruction = pygame.font.Font(None, 30)
 
-Total_Game_Score = score_pong + total_score_2048
+total_game_score = score_pong + total_score_2048 + final_score_snake
 
 def start_screen(final_score):
     # Game Over Nachrichten für unterschiedliche Punktzahlen
@@ -68,9 +63,9 @@ def start_screen(final_score):
     ]
 
     # Auswahl der richtigen Nachrichten basierend auf dem final_score
-    if final_score < 100:
+    if total_game_score < 100:
         message_group = game_over_messages_low
-    elif final_score < 200:
+    elif total_game_score < 200:
         message_group = game_over_messages_medium
     else:
         message_group = game_over_messages_high
@@ -129,7 +124,7 @@ def start_screen(final_score):
             if event.type == pygame.MOUSEBUTTONDOWN and score_button.collidepoint(event.pos):
                 running = False
                 # Weiteres Spiel starten
-                os.system("python G_Game_scores.py")
-start_screen(Total_Game_Score)  # Beispielaufruf mit einem final_score von 150
+                os.system("python F_Game_scores.py")
+start_screen(total_game_score)  # Beispielaufruf mit einem final_score von 150
 
 

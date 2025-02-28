@@ -50,7 +50,11 @@ def draw_score():
 # Game Over Funktion
 def game_over():
     pygame.quit()  # Pygame beenden
-    os.system("python E_End_Page.py")
+    
+    next_file = "E_End_Page.py"
+    command = "python3" if sys.platform != "win32" else "python"
+    os.system(f"{command} {next_file}") # Score_snake Variable muss ergänzt werden
+    sys.exit()  # Stellt sicher, dass das Skript wirklich beendet wird
 
 # Main Game Loop
 while True:
@@ -96,7 +100,7 @@ while True:
     else:
         snake_body.pop()
 
-    finale_score_snake = score_snake
+
     # Neues Obst spawnen
     if not fruit_spawn:
         fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]

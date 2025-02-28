@@ -6,6 +6,7 @@ import csv
 from F_Game_Scores import save_game_score
 
 pygame.init()
+pygame.font.init()  # Initialisiert das Font-Modul
 
 player_name = sys.argv[:-1] if len(sys.argv) > 1 else "Player"
 
@@ -119,6 +120,7 @@ while running:
     clock.tick(60)  # 60 FPS
 
 pygame.quit()
+
 
 command = "python3" if sys.platform != "win32" else "python"
 os.system(f"{command} C_First_Page_2048.py {score_pong}")
