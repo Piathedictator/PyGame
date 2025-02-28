@@ -1,1 +1,1 @@
-save_game
+Save the score

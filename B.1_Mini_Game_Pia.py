@@ -121,4 +121,4 @@ while running:
 pygame.quit()
 
 command = "python3" if sys.platform != "win32" else "python"
-os.system(f"{command} C_First_Page_2048.py \"{player_name}\"")
+os.system(f"{command} C_First_Page_2048.py {score_pong}")
