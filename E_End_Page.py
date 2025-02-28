@@ -1,6 +1,16 @@
 import pygame
 import random
 import os
+import sys
+
+from C_First_Page_2048 import score_pong  # Import der Funktion, aber kein automatischer Aufruf mehr!
+from D_First_Page_Snake import total_score_2048  # Import der Funktion, aber kein automatischer Aufruf mehr!
+from D_mini_game_Frank import finale_score_snake  # Import der Funktion, aber kein automatischer Aufruf mehr!
+
+
+score_pong = sys.argv[1] if len(sys.argv) > 1 else "0"
+total_score_2048 = sys.argv[1] if len(sys.argv) > 1 else "0"
+finale_score_snake= sys.argv[1] if len(sys.argv) > 1 else "0"
 
 pygame.init()
 
@@ -20,6 +30,8 @@ font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
 font_instruction = pygame.font.Font(None, 30)
 
+Total_Game_Score = score_pong + total_score_2048
+
 def start_screen(final_score):
     # Game Over Nachrichten für unterschiedliche Punktzahlen
     game_over_messages_low = [
@@ -38,13 +50,21 @@ def start_screen(final_score):
     game_over_messages_medium = [
         "Ganz gut.: Aber noch nicht genug!",
         "Na, das war schon besser.: Mehr Konzentration!",
-        "Fast geschafft.: Aber noch ist nicht alles gewonnen!"
+        "Fast geschafft.: Aber noch ist nicht alles gewonnen!",
+        "Mühlen mahlen langsam. Deine Besonders.",
+        "Gar nicht schlecht. Hast du jemand dafür bezahlt?",
+        "Ganz gut, aber da geht noch mehr!"
     ]
     
     game_over_messages_high = [
         "Super!: Das war richtig stark!",
         "Top Leistung!: Fast perfekt!",
-        "Du hast es richtig drauf!: Weiter so!"
+        "Du hast es richtig drauf!: Weiter so!",
+        "Das war überraschend gut",
+        "Weeeee are the champioooons.",
+        "Unheimlich gut.",
+        "Das war zu gut. Hast du geschummelt?",
+        "Na, bist du Teil der besten Liste?",
     ]
 
     # Auswahl der richtigen Nachrichten basierend auf dem final_score
@@ -59,7 +79,10 @@ def start_screen(final_score):
     message = random.choice(message_group)
     parts = message.split(": ")  # Nachricht an ':' teilen
 
-    start_button = pygame.Rect(width / 2 - 75, height / 2 + 100, 150, 50)  # Start-Button um 100 nach unten verschieben
+    restart_button = pygame.Rect(width / 2 - 75, height / 2 + 70, 150, 50)  # Restart-Button
+    running = True
+
+    score_button = pygame.Rect(width / 2 - 100, height / 2 + 140, 200, 50)  # Score-Button
     running = True
 
     while running:
@@ -76,15 +99,22 @@ def start_screen(final_score):
             screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
             score_y += 60  # Vertikaler Abstand für die nächste Zeile
 
-        # Nachricht anzeigen (verschoben)
+        # Nachricht anzeigen
         for i, part in enumerate(parts):
             part_text = font_instruction.render(part, True, white)
             screen.blit(part_text, (width / 2 - part_text.get_width() / 2, 250 + i * 40))  # Nachrichten um 100 nach unten verschoben
 
-        # Start Button (verschoben)
-        pygame.draw.rect(screen, white, start_button)
-        button_text = font.render("Restart", True, (0, 0, 0))
-        screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 110))  # Start-Button weiter nach unten verschoben
+        # Restart Button
+        pygame.draw.rect(screen, white, restart_button)
+        button_text1 = font.render("Restart", True, (0, 0, 0))
+        screen.blit(button_text1, (width / 2 - button_text1.get_width() / 2, height / 2 + 80))  # Start-Button weiter nach unten verschoben
+
+        # Score Button
+        
+        pygame.draw.rect(screen, white, score_button)
+        button_text2 = font.render("Bestenliste", True, (0, 0, 0))
+        screen.blit(button_text2, (width / 2 - button_text2.get_width() / 2, height / 2 + 150))  # Start-Button weiter nach unten verschoben
+    
 
         pygame.display.flip()
 
@@ -92,10 +122,14 @@ def start_screen(final_score):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
+            if event.type == pygame.MOUSEBUTTONDOWN and restart_button.collidepoint(event.pos):
                 running = False
+                # Weiteres Spiel starten
+                os.system("python A_First_Page_generall.py")
+            if event.type == pygame.MOUSEBUTTONDOWN and score_button.collidepoint(event.pos):
+                running = False
+                # Weiteres Spiel starten
+                os.system("python G_Game_scores.py")
+start_screen(Total_Game_Score)  # Beispielaufruf mit einem final_score von 150
 
-start_screen(150)  # Beispielaufruf mit einem final_score von 150
 
-# Weiteres Spiel starten
-os.system("python A_First_Page_generall.py")

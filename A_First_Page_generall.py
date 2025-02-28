@@ -1,7 +1,7 @@
 import pygame
 import sys
 import os
-from G_Game_Scores import save_game_score
+from F_Game_Scores import save_game_score
 
 pygame.init()
 

@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+import sys
 
 # Initialisierung von Pygame
 pygame.init()
@@ -36,22 +37,20 @@ direction = 'RIGHT'
 change_to = direction
 
 # Score
-score = 0
+score_snake = 0
 
 # Schriftart
 font = pygame.font.Font(None, 36)
 
 # Score-Anzeige Funktion
 def draw_score():
-    score_text = font.render(f"Score: {score}", True, white)
+    score_text = font.render(f"Score: {score_snake}", True, white)
     screen.blit(score_text, (10, 10))
 
 # Game Over Funktion
 def game_over():
     pygame.quit()  # Pygame beenden
-    os.system("python F_End_Page.py")
-    
-    
+    os.system("python E_End_Page.py")
 
 # Main Game Loop
 while True:
@@ -92,11 +91,12 @@ while True:
     # Snake wächst, wenn es das Obst frisst
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
-        score += 10
+        score_snake += 10
         fruit_spawn = False
     else:
         snake_body.pop()
 
+    finale_score_snake = score_snake
     # Neues Obst spawnen
     if not fruit_spawn:
         fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]

@@ -3,7 +3,7 @@ import random
 import sys
 import os
 import csv
-from G_Game_Scores import save_game_score
+from F_Game_Scores import save_game_score
 
 pygame.init()
 
