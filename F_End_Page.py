@@ -98,4 +98,4 @@ def start_screen(final_score):
 start_screen(150)  # Beispielaufruf mit einem final_score von 150
 
 # Weiteres Spiel starten
-os.system("python 1_First_Page_generall.py")
+os.system("python A_First_Page_generall.py")
