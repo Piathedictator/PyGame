@@ -3,7 +3,9 @@ import random
 import os
 import sys
 
-# Übergeben der Scores der einzelnen Mini Games. Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
+import sys
+
+# Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
 score_pong = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 0
 total_score_2048 = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 0
 score_snake = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3].isdigit() else 0

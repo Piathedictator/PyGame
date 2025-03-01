@@ -52,6 +52,10 @@ def game_over():
     os.system("python F_End_Page.py")
     
     
+    next_file = "E_End_Page.py"
+    command = "python3" if sys.platform != "win32" else "python"
+    os.system(f"{command} {next_file}") # Score_snake Variable muss ergänzt werden
+    sys.exit()  # Stellt sicher, dass das Skript wirklich beendet wird
 
 # Main Game Loop
 while True:
