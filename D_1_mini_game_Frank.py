@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+import sys
 
 # Initialisierung von Pygame
 pygame.init()
@@ -36,20 +37,19 @@ direction = 'RIGHT'
 change_to = direction
 
 # Score
-score = 0
+score_snake = 0
 
 # Schriftart
 font = pygame.font.Font(None, 36)
 
 # Score-Anzeige Funktion
 def draw_score():
-    score_text = font.render(f"Score: {score}", True, white)
+    score_text = font.render(f"Score: {score_snake}", True, white)
     screen.blit(score_text, (10, 10))
 
 # Game Over Funktion
 def game_over():
     pygame.quit()  # Pygame beenden
-    os.system("python F_End_Page.py")
 
 # Main Game Loop
 while True:
@@ -90,7 +90,7 @@ while True:
     # Snake wächst, wenn es das Obst frisst
     snake_body.insert(0, list(snake_position))
     if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
-        score += 10
+        score_snake += 10
         fruit_spawn = False
     else:
         snake_body.pop()
@@ -110,11 +110,17 @@ while True:
 
     # Game Over Bedingungen
     if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
+        next_file = "E_End_Page.py"
+        command = "python3" if sys.platform != "win32" else "python"
+        os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
         game_over()
 
     # Snake Körper berühren (Selbstkollision)
     for block in snake_body[1:]:
         if snake_position[0] == block[0] and snake_position[1] == block[1]:
+            next_file = "E_End_Page.py"
+            command = "python3" if sys.platform != "win32" else "python"
+            os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
             game_over()
 
     # Punktestand anzeigen
