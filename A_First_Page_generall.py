@@ -29,6 +29,7 @@ info_text = [
     "        und sammle Punkte!",
     ]
 
+
 def start_screen():
     global info_visible, player_name
     while True:
@@ -74,5 +75,4 @@ def start_screen():
             #Info Button mit Maus aktivieren:
             if event.type == pygame.MOUSEMOTION:
                 info_visible = info_button.collidepoint(event.pos)
-
 start_screen()

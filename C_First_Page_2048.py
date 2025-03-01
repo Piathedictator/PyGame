@@ -1,8 +1,10 @@
 import pygame
-from B_First_Page_Pia import start_screen  # Import der Funktion, aber kein automatischer Aufruf mehr!
+from B_First_Page_Pia import start_screen, player_name  # Import der Funktion, aber kein automatischer Aufruf mehr!
 import sys
 
-score_pong = sys.argv[1] if len(sys.argv) > 1 else "0"
+
+score_pong = sys.argv[2] if len(sys.argv) > 1 else "0"
+
 
 if __name__ == "__main__":
     # Benutzerdefinierter Info-Text
