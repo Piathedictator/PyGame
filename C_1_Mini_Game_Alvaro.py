@@ -2,6 +2,7 @@ import pygame
 import random
 import os
 import sys
+import time
 
 pygame.init()
 
@@ -163,6 +164,7 @@ def main():
         clock.tick(30)  # 30 fps
 
         if lost:
+            time.sleep(1)
             pygame.quit()
             command = "python3" if sys.platform != "win32" else "python"
             os.system(f"{command} D_First_Page_Snake.py")

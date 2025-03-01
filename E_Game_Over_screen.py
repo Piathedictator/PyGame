@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+import sys
 
 pygame.init()
 
@@ -9,7 +10,7 @@ width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Ende")
 
-background = pygame.image.load("background_pong.jpg")  # Bild laden und anpassen
+background = pygame.image.load("Z_background_pong.jpg")  # Bild laden und anpassen
 background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
@@ -98,4 +99,7 @@ def start_screen(final_score):
 start_screen(150)  # Beispielaufruf mit einem final_score von 150
 
 # Weiteres Spiel starten
+next_file = "A_First_Page_generall.py"
+command = "python3" if sys.platform != "win32" else "python"
+os.system(f"{command} {next_file}")
 os.system("python 1_First_Page_generall.py")

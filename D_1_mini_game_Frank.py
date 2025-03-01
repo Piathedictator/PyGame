@@ -109,19 +109,20 @@ while True:
     pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
     # Game Over Bedingungen
-    if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
-        next_file = "E_End_Page.py"
+    if snake_position[0] < 0 or snake_position[0] > WIDTH - 10 or snake_position[1] < 0 or snake_position[
+        1] > HEIGHT - 10:
+        next_file = "F_End_Page.py"
         command = "python3" if sys.platform != "win32" else "python"
-        os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
-        game_over()
+        os.system(f"{command} {next_file} {score_snake}")  # Score_snake Variable muss ergänzt werden
+        sys.exit()
 
     # Snake Körper berühren (Selbstkollision)
     for block in snake_body[1:]:
         if snake_position[0] == block[0] and snake_position[1] == block[1]:
-            next_file = "E_End_Page.py"
+            next_file = "F_End_Page.py"
             command = "python3" if sys.platform != "win32" else "python"
-            os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
-            game_over()
+            os.system(f"{command} {next_file} {score_snake}")  # Score_snake Variable muss ergänzt werden
+            sys.exit()
 
     # Punktestand anzeigen
     draw_score()
