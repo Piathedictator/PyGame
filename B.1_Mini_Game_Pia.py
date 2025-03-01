@@ -3,8 +3,8 @@ import random
 import sys
 import os
 import csv
-from G_Game_Scores import save_game_score
-from A_First_Page_generall import player_name
+#from G_Game_Scores import save_game_score
+
 
 pygame.init()
 
@@ -91,7 +91,7 @@ while running: # Spielschleife
     if ball.bottom >= height:
         print(f"Game Over! Dein Score: {score_pong}")
         running = False
-        save_game_score(player_name, score_pong)
+        #save_game_score(player_name, score_pong)
 
     # Visualisierung:
     white = (255, 255, 255)
@@ -119,4 +119,4 @@ while running: # Spielschleife
 pygame.quit()
 
 command = "python3" if sys.platform != "win32" else "python"
-os.system(f"{command} C_First_Page_2048.py \"{player_name}\" \"{score_pong}\"")
+os.system(f"{command} C_First_Page_2048.py")
