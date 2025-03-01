@@ -51,10 +51,6 @@ def draw_score():
 def game_over():
     pygame.quit()  # Pygame beenden
     
-    next_file = "E_End_Page.py"
-    command = "python3" if sys.platform != "win32" else "python"
-    os.system(f"{command} {next_file}") # Score_snake Variable muss ergänzt werden
-    sys.exit()  # Stellt sicher, dass das Skript wirklich beendet wird
 
 # Main Game Loop
 while True:
@@ -116,11 +112,18 @@ while True:
 
     # Game Over Bedingungen
     if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
+        
+        next_file = "E_End_Page.py"
+        command = "python3" if sys.platform != "win32" else "python"
+        os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
         game_over()
 
     # Snake Körper berühren (Selbstkollision)
     for block in snake_body[1:]:
         if snake_position[0] == block[0] and snake_position[1] == block[1]:
+            next_file = "E_End_Page.py"
+            command = "python3" if sys.platform != "win32" else "python"
+            os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
             game_over()
 
     # Punktestand anzeigen

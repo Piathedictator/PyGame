@@ -1,105 +1,143 @@
 import pygame
+import time
+import random
 import sys
-import os
 
+snake_speed = 15
+
+# defining colors
+black = pygame.Color(0, 0, 0)  
+white = pygame.Color(255, 255, 255)
+red = pygame.Color(255, 0, 0)
+green = pygame.Color(0, 255, 0)
+blue = pygame.Color(0, 0, 255)
+TEXT_COLOR = black
+
+# Initialisierung von Pygame
 pygame.init()
 pygame.font.init()  # Initialisiert das Font-Modul
+pygame.font.init()
 
-# Fenstergröße
-width, height = 600, 600
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Pong - Startseite")
+font = pygame.font.Font(None, 36)
+size = 36
 
-# Player Name aus Skript übernehmen
-player_name = sys.argv[1] if len(sys.argv) > 1 else "Player"
+# Spielfeldgröße und Laden des Hintergrundbildes, Game_Over_screens
+WIDTH, HEIGHT = 600, 600
+GRID_SIZE = 10
+BACKGROUND_IMAGE = pygame.image.load("Z_background_pages.jpg")
+BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))
+GAMEOVER_IMAGE = pygame.image.load("Z_start_image.jpg")
+GAMEOVER_IMAGE = pygame.transform.scale(GAMEOVER_IMAGE, (WIDTH, HEIGHT))
 
-# Hintergrundbild laden
-background_path = "Z_background_pages.jpg"
-if not os.path.exists(background_path):
-    print("Fehler: Hintergrundbild nicht gefunden!")
+# Fenster erstellen
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Snake Game")
+clock = pygame.time.Clock()
+
+# defining snake default position
+snake_position = [100, 50]
+
+# defining first 4 blocks of snake body
+snake_body = [[100, 50], [90, 50], [80, 50], [70, 50]]
+
+# fruit position
+fruit_position = [random.randrange(1, (WIDTH//10)) * 10, 
+                  random.randrange(1, (HEIGHT//10)) * 10]
+fruit_spawn = True
+
+# setting default snake direction towards right
+direction = 'RIGHT'
+change_to = direction
+
+# initial score
+score = 0
+
+def show_score():
+    score_surface = font.render(f'Score: {score}', True, TEXT_COLOR)
+    screen.blit(score_surface, (10, 10))
+
+game_over_messages = [
+    "Das ist ja nicht so gut gelaufen. Probier's nochmal!",
+    "Anfängerfehler. Jetzt streng dich mal an!",
+    "Hätte hätte Snake Game Kette. Da machste nix, probier's nochmal!",
+    "Digga, dein Versagen kotzt mich an. Vallah!",
+    "Du hast verloren. Geh nach Hause.",
+    "Du hast schwach angefangen. Dann stark nachgelassen!",
+    "Gamer? Eher Game Over!",
+    "Schlangemörder!",
+    "Digga, was war das?!",
+    "Spielst du mit den Füßen oder wat?"
+]
+
+def game_over():
+    screen.blit(GAMEOVER_IMAGE, (0, 0))
+    message = random.choice(game_over_messages)
+    lines = message.split(". ")
+    y_offset = HEIGHT // 2 - (len(lines) * 20)
+    for line in lines:
+        game_over_text = font.render(line, True, TEXT_COLOR)
+        text_rect = game_over_text.get_rect(center=(WIDTH // 2, y_offset))
+        screen.blit(game_over_text, text_rect)
+        y_offset += 40
+    pygame.display.flip()
+    pygame.time.delay(3000)
     pygame.quit()
     sys.exit()
 
-background = pygame.image.load(background_path)
-background = pygame.transform.scale(background, (width, height))
-
-# Farben
-white = (255, 255, 255)
-blue = (173, 216, 230)
-gray = (180, 180, 180)
-pink = (255, 0, 255)
-yellow = (255, 255, 102)
-black = (0, 0, 0)
-
-# Schriftarten
-font = pygame.font.Font(None, 60)
-font_instruction = pygame.font.Font(None, 50)
-info_font = pygame.font.Font(None, 30)
-
-# Info-Symbol
-info_button = pygame.Rect(width / 2 - 15, height / 2 + 75, 30, 30)
-
-def start_screen(titel_text, instructions_text, info_text, next_file):
-    info_visible = False
-    start_button = pygame.Rect(width / 2 - 75, height / 2, 150, 50)
-    info_box = pygame.Rect(width / 2 - 240, height / 2 + 110, 480, 80)
-    running = True
-
-    while running:
-        screen.blit(background, (0, 0))
-
-        # Titel mit Schatten
-        shadow_offset = 2
-        title_text_shadow = font.render(titel_text.format(player_name=player_name), True, black)
-        screen.blit(title_text_shadow, (width / 2 - title_text_shadow.get_width() / 2 + shadow_offset, 150 + shadow_offset))
-        title_text = font.render(titel_text.format(player_name=player_name), True, pink)
-        screen.blit(title_text, (width / 2 - title_text.get_width() / 2, 150))
-
-        # Instruction Text mit Schatten
-        instructions_text_shadow = font_instruction.render(instructions_text, True, black)
-        screen.blit(instructions_text_shadow, (width / 2 - instructions_text_shadow.get_width() / 2 + shadow_offset, 200 + shadow_offset))
-        instructions_text_surface = font_instruction.render(instructions_text, True, pink)
-        screen.blit(instructions_text_surface, (width / 2 - instructions_text_surface.get_width() / 2, 200))
-
-        # Start Button
-        pygame.draw.rect(screen, yellow, start_button)
-        button_text = font.render("Start", True, pink)
-        screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 5))
-
-        # Info-Symbol
-        pygame.draw.circle(screen, blue, info_button.center, 15)
-        info_icon = font_instruction.render("i", True, white)
-        screen.blit(info_icon, (info_button.x + 10, info_button.y))
-
-        # Info-Text anzeigen, wenn aktiv
-        if info_visible:
-            pygame.draw.rect(screen, yellow, info_box)
-            for i, line in enumerate(info_text):
-                text_surface = info_font.render(line, True, pink)
-                screen.blit(text_surface, (width / 2 - text_surface.get_width()/2, (height / 2 + 120) + i * 20))
-
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
-                running = False
-            if event.type == pygame.MOUSEMOTION:
-                info_visible = info_button.collidepoint(event.pos)
-
-    command = "python3" if sys.platform != "win32" else "python"
-    next_file_path = os.path.join(os.getcwd(), next_file)
-    os.system(f"{command} \"{next_file_path}\"")
-
-if __name__ == "__main__":
-    pong_title_text = "Hallo {player_name}!"
-    pong_instruction_text = "Das erste Spiel ist Pong"
-    pong_info_text = [
-        "Steuere den Schläger mit den Pfeiltasten.",
-        "Halte den Ball im Spiel und sammle Punkte.",
-        "Drücke den Start-Button, um zu beginnen.",
-    ]
-
-    start_screen(pong_title_text, pong_instruction_text, pong_info_text, "B.1_Mini_Game_Pia.py")
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                change_to = 'UP'
+            if event.key == pygame.K_DOWN:
+                change_to = 'DOWN'
+            if event.key == pygame.K_LEFT:
+                change_to = 'LEFT'
+            if event.key == pygame.K_RIGHT:
+                change_to = 'RIGHT'
+    
+    if change_to == 'UP' and direction != 'DOWN':
+        direction = 'UP'
+    if change_to == 'DOWN' and direction != 'UP':
+        direction = 'DOWN'
+    if change_to == 'LEFT' and direction != 'RIGHT':
+        direction = 'LEFT'
+    if change_to == 'RIGHT' and direction != 'LEFT':
+        direction = 'RIGHT'
+    
+    if direction == 'UP':
+        snake_position[1] -= 10
+    if direction == 'DOWN':
+        snake_position[1] += 10
+    if direction == 'LEFT':
+        snake_position[0] -= 10
+    if direction == 'RIGHT':
+        snake_position[0] += 10
+    
+    snake_body.insert(0, list(snake_position))
+    if snake_position == fruit_position:
+        score += 10 
+        fruit_spawn = False
+    else:
+        snake_body.pop()
+    
+    if not fruit_spawn:
+        fruit_position = [random.randrange(1, (WIDTH//10)) * 10, 
+                          random.randrange(1, (HEIGHT//10)) * 10]
+    fruit_spawn = True
+    
+    screen.blit(BACKGROUND_IMAGE, (0, 0))
+    for pos in snake_body:
+        pygame.draw.rect(screen, blue, pygame.Rect(pos[0], pos[1], 10, 10))
+    pygame.draw.rect(screen, red, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
+    
+    if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
+        game_over()
+    
+    for block in snake_body[1:]:
+        if snake_position[0] == block[0] and snake_position[1] == block[1]:
+            game_over()
+    
+    show_score()
+    pygame.display.update()
+    clock.tick(snake_speed)

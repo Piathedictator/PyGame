@@ -3,9 +3,15 @@ import random
 import os
 import sys
 
-score_pong = sys.argv[1] if len(sys.argv) > 1 else 0
-total_score_2048 = sys.argv[2] if len(sys.argv) > 1 else 0
-final_score_snake = sys.argv[3] if len(sys.argv) > 1 else 0
+import sys
+
+# Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
+score_pong = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 0
+total_score_2048 = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 0
+score_snake = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3].isdigit() else 0
+
+# Gesamtpunktzahl berechnen
+total_game_score = score_pong + total_score_2048 + score_snake
 
 pygame.init()
 
@@ -25,7 +31,7 @@ font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
 font_instruction = pygame.font.Font(None, 30)
 
-total_game_score = score_pong + total_score_2048 + final_score_snake
+total_game_score = score_pong + total_score_2048 + score_snake
 
 def start_screen(final_score):
     # Game Over Nachrichten für unterschiedliche Punktzahlen
