@@ -165,10 +165,11 @@ def main():
 
         if lost:
             time.sleep(1)
-            pygame.quit()
-            command = "python3" if sys.platform != "win32" else "python"
-            os.system(f"{command} D_First_Page_Snake.py")
+            running = False  # Stop the game loop
 
+    pygame.quit()  # Quit Pygame after the game loop
+    command = "python3" if sys.platform != "win32" else "python"
+    os.system(f"{command} D_First_Page_Snake.py")
 
 if __name__ == "__main__":
     main()
