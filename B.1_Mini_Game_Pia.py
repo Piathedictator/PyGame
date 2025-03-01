@@ -4,7 +4,6 @@ import sys
 import os
 import csv
 from G_Game_Scores import save_game_score
-from A_First_Page_generall import player_name
 
 pygame.init()
 
@@ -38,13 +37,12 @@ def create_obstacle():
     y = random.randint(200, height - 300)
     return pygame.Rect(x, y, 50, 20)
 
-
+# Spielschleife
 score_pong = 0
 running = True
 clock = pygame.time.Clock()
-#player_name = sys.argv[1]
 
-while running: # Spielschleife
+while running:
     screen.blit(background, (0, 0))
 
     # Event Handling
@@ -91,7 +89,6 @@ while running: # Spielschleife
     if ball.bottom >= height:
         print(f"Game Over! Dein Score: {score_pong}")
         running = False
-        save_game_score(player_name, score_pong)
 
     # Visualisierung:
     white = (255, 255, 255)
@@ -119,4 +116,4 @@ while running: # Spielschleife
 pygame.quit()
 
 command = "python3" if sys.platform != "win32" else "python"
-os.system(f"{command} C_First_Page_2048.py \"{player_name}\" \"{score_pong}\"")
+os.system(f"{command} C_First_Page_2048.py {score_pong}")
