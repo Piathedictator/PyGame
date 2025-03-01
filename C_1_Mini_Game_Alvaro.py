@@ -1,5 +1,8 @@
 import pygame
 import random
+import os
+import sys
+
 pygame.init()
 
 # set basic variables
@@ -152,25 +155,18 @@ def main():
 
         draw_board(screen, board) #draw current state
 
-        if lost:
-            text = FONT.render("You lost!", True, (255, 0, 0)) #losing text
-            text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)) #center
-            screen.blit(text, text_rect) #show text
-
         total_score_2048_text = FONT.render(f"Score: {total_score_2048}", True, (0, 0, 0)) # Display the score
         total_score_2048_x = SCREEN_WIDTH - MARGIN - total_score_2048_text.get_width()  # Calculate x position for top right
         screen.blit(total_score_2048_text, (total_score_2048_x, 0))  # Display score
 
-        pygame.display.flip() #updating the frame
-        clock.tick(30) #30 fps
+        pygame.display.flip()  # updating the frame
+        clock.tick(30)  # 30 fps
 
-    pygame.quit()
+        if lost:
+            pygame.quit()
+            command = "python3" if sys.platform != "win32" else "python"
+            os.system(f"{command} D_First_Page_Snake.py")
+
 
 if __name__ == "__main__":
     main()
-
-import os
-import sys
-
-command = "python3" if sys.platform != "win32" else "python"
-os.system(f"{command} D_First_Page_Snake.py")
