@@ -1,0 +1,135 @@
+Index: F_End_Page.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\nimport random\nimport os\nimport sys\n\nimport sys\n\n# Sicherstellen, dass fehlende Werte auf 0 gesetzt werden\nscore_pong = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 0\ntotal_score_2048 = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 0\nscore_snake = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3].isdigit() else 0\n\n# Gesamtpunktzahl berechnen\ntotal_game_score = score_pong + total_score_2048 + score_snake\n\npygame.init()\n\n# Fenstergröße\nwidth, height = 600, 600\nscreen = pygame.display.set_mode((width, height))\npygame.display.set_caption(\"Ende\")\n\nbackground = pygame.image.load(\"Z_background_pong.jpg\")  # Bild laden und anpassen\nbackground = pygame.transform.scale(background, (width, height))\n\n# Farben und Schriftarten\nwhite = (255, 255, 255)\ngreen = pygame.Color(0, 255, 0)  # Grüne Farbe für final_score\n\nfont_title = pygame.font.Font(None, 70)\nfont = pygame.font.Font(None, 50)\nfont_instruction = pygame.font.Font(None, 30)\n\ntotal_game_score = score_pong + total_score_2048 + score_snake\n\ndef start_screen(final_score):\n    # Game Over Nachrichten für unterschiedliche Punktzahlen\n    game_over_messages_low = [\n        \"Das ist ja nicht so gut gelaufen.: Probier's nochmal!\",\n        \"Anfängerfehler.: Jetzt streng dich mal an!\",\n        \"Hätte hätte Snake Game Kette.: Da machste nix, probier's nochmal!\",\n        \"Digga, dein Versagen kotzt mich an.: Vallah!\",\n        \"Du hast verloren.: Geh nach Hause.\",\n        \"Du hast schwach angefangen.: Dann stark nachgelassen!\",\n        \"Loooooooser!!!\",\n        \"Digga, was war das?!\",\n        \"Spielst du mit den Füßen oder wat?\",\n        \"Liegt dein Versagen am Spiel?: Ich denke nicht.\"\n    ]\n    \n    game_over_messages_medium = [\n        \"Ganz gut.: Aber noch nicht genug!\",\n        \"Na, das war schon besser.: Mehr Konzentration!\",\n        \"Fast geschafft.: Aber noch ist nicht alles gewonnen!\",\n        \"Mühlen mahlen langsam. Deine Besonders.\",\n        \"Gar nicht schlecht. Hast du jemand dafür bezahlt?\",\n        \"Ganz gut, aber da geht noch mehr!\"\n    ]\n    \n    game_over_messages_high = [\n        \"Super!: Das war richtig stark!\",\n        \"Top Leistung!: Fast perfekt!\",\n        \"Du hast es richtig drauf!: Weiter so!\",\n        \"Das war überraschend gut\",\n        \"Weeeee are the champioooons.\",\n        \"Unheimlich gut.\",\n        \"Das war zu gut. Hast du geschummelt?\",\n        \"Na, bist du Teil der besten Liste?\",\n    ]\n\n    # Auswahl der richtigen Nachrichten basierend auf dem final_score\n    if total_game_score < 100:\n        message_group = game_over_messages_low\n    elif total_game_score < 200:\n        message_group = game_over_messages_medium\n    else:\n        message_group = game_over_messages_high\n\n    # Zufällige Nachricht aus der ausgewählten Gruppe\n    message = random.choice(message_group)\n    parts = message.split(\": \")  # Nachricht an ':' teilen\n\n    restart_button = pygame.Rect(width / 2 - 75, height / 2 + 70, 150, 50)  # Restart-Button\n    running = True\n\n    score_button = pygame.Rect(width / 2 - 100, height / 2 + 140, 200, 50)  # Score-Button\n    running = True\n\n    while running:\n        screen.blit(background, (0, 0))\n\n        # Zeile für den final_score\n        score_text = f\"Endpunktestand:! {final_score}\"\n\n        # Zeilenumbruch in `score_text` einfügen\n        score_lines = score_text.split(\"! \")  # Optional: wenn du nach \"Dein Endpunktestand\" und der Zahl trennen möchtest\n        score_y = 100  # Startposition für die erste Zeile\n        for line in score_lines:\n            score_part = font_title.render(line, True, green)\n            screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))\n            score_y += 60  # Vertikaler Abstand für die nächste Zeile\n\n        # Nachricht anzeigen\n        for i, part in enumerate(parts):\n            part_text = font_instruction.render(part, True, white)\n            screen.blit(part_text, (width / 2 - part_text.get_width() / 2, 250 + i * 40))  # Nachrichten um 100 nach unten verschoben\n\n        # Restart Button\n        pygame.draw.rect(screen, white, restart_button)\n        button_text1 = font.render(\"Restart\", True, (0, 0, 0))\n        screen.blit(button_text1, (width / 2 - button_text1.get_width() / 2, height / 2 + 80))  # Start-Button weiter nach unten verschoben\n\n        # Score Button\n        \n        pygame.draw.rect(screen, white, score_button)\n        button_text2 = font.render(\"Bestenliste\", True, (0, 0, 0))\n        screen.blit(button_text2, (width / 2 - button_text2.get_width() / 2, height / 2 + 150))  # Start-Button weiter nach unten verschoben\n    \n\n        pygame.display.flip()\n\n        for event in pygame.event.get():\n            if event.type == pygame.QUIT:\n                pygame.quit()\n                exit()\n            if event.type == pygame.MOUSEBUTTONDOWN and restart_button.collidepoint(event.pos):\n                running = False\n                # Weiteres Spiel starten\n                os.system(\"python A_First_Page_generall.py\")\n            if event.type == pygame.MOUSEBUTTONDOWN and score_button.collidepoint(event.pos):\n                running = False\n                # Weiteres Spiel starten\n                os.system(\"python F_Game_scores.py\")\nstart_screen(total_game_score)  # Beispielaufruf mit einem final_score von 150\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/F_End_Page.py b/F_End_Page.py
+--- a/F_End_Page.py	(revision 01076ffb85a779d5ec32f8bf35de32e6c7b47cc7)
++++ b/F_End_Page.py	(date 1740828176451)
+@@ -3,15 +3,9 @@
+ import os
+ import sys
+ 
+-import sys
+-
+-# Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
+-score_pong = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 0
+-total_score_2048 = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 0
+-score_snake = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3].isdigit() else 0
+-
+-# Gesamtpunktzahl berechnen
+-total_game_score = score_pong + total_score_2048 + score_snake
++score_pong = sys.argv[1] if len(sys.argv) > 1 else 0
++total_score_2048 = sys.argv[2] if len(sys.argv) > 1 else 0
++final_score_snake = sys.argv[3] if len(sys.argv) > 1 else 0
+ 
+ pygame.init()
+ 
+@@ -31,7 +25,7 @@
+ font = pygame.font.Font(None, 50)
+ font_instruction = pygame.font.Font(None, 30)
+ 
+-total_game_score = score_pong + total_score_2048 + score_snake
++total_game_score = score_pong + total_score_2048 + final_score_snake
+ 
+ def start_screen(final_score):
+     # Game Over Nachrichten für unterschiedliche Punktzahlen
+Index: D.1_mini_game_Frank.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\nimport random\nimport os\n\n# Initialisierung von Pygame\npygame.init()\n\n# Spielfrequenz\nsnake_speed = 15\n\n# Defining colors\nblack = pygame.Color(0, 0, 0)\nwhite = pygame.Color(255, 255, 255)\nblue = pygame.Color(0, 0, 255)\norange = pygame.Color(255, 165, 0)\n\n# Spielfeldgröße und Hintergrundbild\nWIDTH, HEIGHT = 600, 600\nGRID_SIZE = 10\nBACKGROUND_IMAGE = pygame.image.load(\"Z_BackSnake.jpg\")  # Hintergrundbild laden\nBACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))\nGAMEOVER_IMAGE = pygame.image.load(\"Z_background_pong.jpg\")  # Game Over Bild laden\nGAMEOVER_IMAGE = pygame.transform.scale(GAMEOVER_IMAGE, (WIDTH, HEIGHT))\n\n# Fenster erstellen\nscreen = pygame.display.set_mode((WIDTH, HEIGHT))\npygame.display.set_caption(\"Snake Game\")\nclock = pygame.time.Clock()\n\n# Snake Initialisierung\nsnake_position = [100, 50]\nsnake_body = [[100, 50], [90, 50], [80, 50], [70, 50]]\nfruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]\nfruit_spawn = True\ndirection = 'RIGHT'\nchange_to = direction\n\n# Score\nscore = 0\n\n# Schriftart\nfont = pygame.font.Font(None, 36)\n\n# Score-Anzeige Funktion\ndef draw_score():\n    score_text = font.render(f\"Score: {score}\", True, white)\n    screen.blit(score_text, (10, 10))\n\n# Game Over Funktion\ndef game_over():\n    pygame.quit()  # Pygame beenden\n    os.system(\"python F_End_Page.py\")\n    \n    \n    next_file = \"E_End_Page.py\"\n    command = \"python3\" if sys.platform != \"win32\" else \"python\"\n    os.system(f\"{command} {next_file}\") # Score_snake Variable muss ergänzt werden\n    sys.exit()  # Stellt sicher, dass das Skript wirklich beendet wird\n\n# Main Game Loop\nwhile True:\n    for event in pygame.event.get():\n        if event.type == pygame.QUIT:\n            pygame.quit()\n            exit()\n        if event.type == pygame.KEYDOWN:\n            if event.key == pygame.K_UP:\n                change_to = 'UP'\n            if event.key == pygame.K_DOWN:\n                change_to = 'DOWN'\n            if event.key == pygame.K_LEFT:\n                change_to = 'LEFT'\n            if event.key == pygame.K_RIGHT:\n                change_to = 'RIGHT'\n\n    # Snake Richtung aktualisieren\n    if change_to == 'UP' and direction != 'DOWN':\n        direction = 'UP'\n    if change_to == 'DOWN' and direction != 'UP':\n        direction = 'DOWN'\n    if change_to == 'LEFT' and direction != 'RIGHT':\n        direction = 'LEFT'\n    if change_to == 'RIGHT' and direction != 'LEFT':\n        direction = 'RIGHT'\n\n    # Snake Bewegung\n    if direction == 'UP':\n        snake_position[1] -= 10\n    if direction == 'DOWN':\n        snake_position[1] += 10\n    if direction == 'LEFT':\n        snake_position[0] -= 10\n    if direction == 'RIGHT':\n        snake_position[0] += 10\n\n    # Snake wächst, wenn es das Obst frisst\n    snake_body.insert(0, list(snake_position))\n    if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:\n        score += 10\n        fruit_spawn = False\n    else:\n        snake_body.pop()\n\n    # Neues Obst spawnen\n    if not fruit_spawn:\n        fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]\n    fruit_spawn = True\n\n    # Hintergrund anzeigen\n    screen.blit(BACKGROUND_IMAGE, (0, 0))\n\n    # Snake und Obst zeichnen\n    for pos in snake_body:\n        pygame.draw.rect(screen, blue, pygame.Rect(pos[0], pos[1], 10, 10))\n    pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))\n\n    # Game Over Bedingungen\n    if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:\n        game_over()\n\n    # Snake Körper berühren (Selbstkollision)\n    for block in snake_body[1:]:\n        if snake_position[0] == block[0] and snake_position[1] == block[1]:\n            game_over()\n\n    # Punktestand anzeigen\n    draw_score()\n\n    # Bildschirm aktualisieren\n    pygame.display.update()\n\n    # FPS einstellen\n    clock.tick(snake_speed)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/D.1_mini_game_Frank.py b/D.1_mini_game_Frank.py
+--- a/D.1_mini_game_Frank.py	(revision 01076ffb85a779d5ec32f8bf35de32e6c7b47cc7)
++++ b/D.1_mini_game_Frank.py	(date 1740828167257)
+@@ -1,6 +1,7 @@
+ import pygame
+ import random
+ import os
++import sys
+ 
+ # Initialisierung von Pygame
+ pygame.init()
+@@ -36,21 +37,19 @@
+ change_to = direction
+ 
+ # Score
+-score = 0
++score_snake = 0
+ 
+ # Schriftart
+ font = pygame.font.Font(None, 36)
+ 
+ # Score-Anzeige Funktion
+ def draw_score():
+-    score_text = font.render(f"Score: {score}", True, white)
++    score_text = font.render(f"Score: {score_snake}", True, white)
+     screen.blit(score_text, (10, 10))
+ 
+ # Game Over Funktion
+ def game_over():
+     pygame.quit()  # Pygame beenden
+-    os.system("python F_End_Page.py")
+-    
+     
+     next_file = "E_End_Page.py"
+     command = "python3" if sys.platform != "win32" else "python"
+@@ -96,11 +95,12 @@
+     # Snake wächst, wenn es das Obst frisst
+     snake_body.insert(0, list(snake_position))
+     if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
+-        score += 10
++        score_snake += 10
+         fruit_spawn = False
+     else:
+         snake_body.pop()
+ 
++
+     # Neues Obst spawnen
+     if not fruit_spawn:
+         fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+Index: B.1_Mini_Game_Pia.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\nimport random\nimport sys\nimport os\nimport csv\nfrom G_Game_Scores import save_game_score\n\npygame.init()\n\n# Fenstergröße\nwidth, height = 600, 600\nscreen = pygame.display.set_mode((width, height))\npygame.display.set_caption(\"Pong_Game\")\n\n# Hintergrundbild:\nbackground = pygame.image.load(\"Z_background_pong.jpg\")  # Bild laden\nbackground = pygame.transform.scale(background, (width, height))  # Größe anpassen\n\n# Variablen:\npaddle_width, paddle_height = 15, 100\nball_size = 15\npaddle_speed = 7\nball_speed_x, ball_speed_y = 5, -5  # Ball Geschwindigkeit\nspeed_multiplier = 1.05  # Erhöhung der Geschwindigkeit nach jedem Score\n\n# Positioierung Objekte\nplayer = pygame.Rect(height / 2, 570 , paddle_height, paddle_width)\nball = pygame.Rect(width / 2 , height / 2, ball_size, ball_size)\n\n#Schriftart\nfont = pygame.font.Font(None, 40)\n\n# Hindernisse random erstellen: \nobstacles = []\ndef create_obstacle():\n    x = random.randint(100, width - 50)\n    y = random.randint(200, height - 300)\n    return pygame.Rect(x, y, 50, 20)\n\n# Spielschleife\nscore_pong = 0\nrunning = True\nclock = pygame.time.Clock()\n\nwhile running:\n    screen.blit(background, (0, 0))\n\n    # Event Handling\n    for event in pygame.event.get():\n        if event.type == pygame.QUIT:\n            running = False\n\n    # Steuerung für den Spieler (Pfeiltasten)\n    keys = pygame.key.get_pressed()\n    if keys[pygame.K_LEFT] and player.left > 0:\n        player.x -= paddle_speed\n    if keys[pygame.K_RIGHT] and player.right < width:\n        player.x += paddle_speed\n\n    # Ballbewegung\n    ball.x += ball_speed_x\n    ball.y += ball_speed_y\n\n    # Ball-Kollision mit Wänden links & rechts\n    if ball.left <= 0 or ball.right >= width:\n        ball_speed_x *= -1\n\n    # Ball-Kollision mit oberer Wand (Score)\n    if ball.top <= 0:\n        ball_speed_y *= -1\n        score_pong += 1\n\n        if score_pong % 2 == 0:\n            obstacles.append(create_obstacle())  # Alle 2 Scores wird Hinderniss erstellt\n    \n    # Ball-Kollision mit Hindernissen:\n    for obstacle in obstacles[:]:\n        if ball.colliderect(obstacle):\n            ball_speed_y *= -1  \n            obstacles.remove(obstacle) \n\n    # Ball-Kollision mit Spieler-Schläger\n    if ball.colliderect(player):\n        ball_speed_y *= -1 \n        ball_speed_x *= speed_multiplier  # Geschwindigkeit erhöhen x & y\n        ball_speed_y *= speed_multiplier  \n\n    # Wenn der Ball unten verschwindet → Game Over\n    if ball.bottom >= height:\n        print(f\"Game Over! Dein Score: {score_pong}\")\n        running = False\n\n    # Visualisierung:\n    white = (255, 255, 255)\n    dark_gray = (100, 100, 100)\n\n    # Schläger:\n    pygame.draw.rect(screen, dark_gray, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten\n    pygame.draw.rect(screen, white, player)\n\n    # Ball:\n    pygame.draw.ellipse(screen, dark_gray, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten\n    pygame.draw.ellipse(screen, white, ball) \n\n    obstacle_colour = (255, 218, 185)\n    for obstacle in obstacles:\n        pygame.draw.rect(screen, obstacle_colour, obstacle)\n\n    # Score anzeigen:\n    score_text = font.render(f\"Score: {score_pong}\", True, white)\n    screen.blit(score_text, (width // 2 - 30, 20))\n\n    pygame.display.flip()\n    clock.tick(60)  # 60 FPS\n\npygame.quit()\n\ncommand = \"python3\" if sys.platform != \"win32\" else \"python\"\nos.system(f\"{command} C_First_Page_2048.py {score_pong}\")\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/B.1_Mini_Game_Pia.py b/B.1_Mini_Game_Pia.py
+--- a/B.1_Mini_Game_Pia.py	(revision 01076ffb85a779d5ec32f8bf35de32e6c7b47cc7)
++++ b/B.1_Mini_Game_Pia.py	(date 1740828156241)
+@@ -3,9 +3,12 @@
+ import sys
+ import os
+ import csv
+-from G_Game_Scores import save_game_score
++from F_Game_Scores import save_game_score
+ 
+ pygame.init()
++pygame.font.init()  # Initialisiert das Font-Modul
++
++player_name = sys.argv[:-1] if len(sys.argv) > 1 else "Player"
+ 
+ # Fenstergröße
+ width, height = 600, 600
+@@ -89,6 +92,9 @@
+     if ball.bottom >= height:
+         print(f"Game Over! Dein Score: {score_pong}")
+         running = False
++        # Save the player's score to the CSV file
++        game_name = "Pong"  # Specify the game name
++        save_game_score(player_name, game_name, score_pong)  # Save the score
+ 
+     # Visualisierung:
+     white = (255, 255, 255)
+@@ -115,5 +121,6 @@
+ 
+ pygame.quit()
+ 
++
+ command = "python3" if sys.platform != "win32" else "python"
+ os.system(f"{command} C_First_Page_2048.py {score_pong}")
