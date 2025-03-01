@@ -1,5 +1,10 @@
 import pygame
 import random
+import os
+import sys
+from G_Game_Scores import save_game_score
+from A_First_Page_generall import player_name
+
 pygame.init()
 
 # set basic variables
@@ -30,6 +35,7 @@ TILE_COLORS = {
 }
 FONT_COLOR = (0, 0, 0)
 FONT = pygame.font.SysFont('arial', 40)
+
 
 #############################
 
@@ -164,13 +170,12 @@ def main():
         pygame.display.flip() #updating the frame
         clock.tick(30) #30 fps
 
+        save_game_score(player_name, total_score_2048)
+
     pygame.quit()
 
 if __name__ == "__main__":
     main()
-
-import os
-import sys
 
 command = "python3" if sys.platform != "win32" else "python"
 os.system(f"{command} D_First_Page_Snake.py")
