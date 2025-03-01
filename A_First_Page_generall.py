@@ -1,10 +1,6 @@
 import pygame
 import sys
 import os
-<<<<<<< HEAD
-=======
-from G_Game_Scores import save_game_score
->>>>>>> parent of 535570a (Umbenennung Pages für Ende Page, End Page fertig bis auf die Score Variablen der einzelnen Games (total_score_20248 lässt sich nicht importieren)
 
 pygame.init()
 

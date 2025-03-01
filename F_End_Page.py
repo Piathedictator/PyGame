@@ -96,10 +96,3 @@ def start_screen(final_score):
                 running = False
 
 start_screen(150)  # Beispielaufruf mit einem final_score von 150
-
-# Weiteres Spiel starten
-<<<<<<< HEAD
-os.system("python 1_First_Page_generall.py")
-=======
-os.system("python A_First_Page_generall.py")
->>>>>>> parent of 535570a (Umbenennung Pages für Ende Page, End Page fertig bis auf die Score Variablen der einzelnen Games (total_score_20248 lässt sich nicht importieren)
