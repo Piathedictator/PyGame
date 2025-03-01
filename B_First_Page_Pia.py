@@ -93,5 +93,5 @@ if __name__ == "__main__":
         "Drücke den Start-Button, um zu beginnen.",
     ]
     
-    start_screen(pong_title_text, pong_instruction_text, pong_info_text, "B.1_Mini_Game_Pia.py")
+    start_screen(pong_title_text, pong_instruction_text, pong_info_text, "B_1_Mini_Game_Pia.py")
 

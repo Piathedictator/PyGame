@@ -81,4 +81,4 @@ if __name__ == "__main__":
         "Halte den Ball im Spiel und sammle Punkte.",
     ]
 
-start_screen(default_info_text, "B.1_Mini_Game_Pia.py")  # Replace with your actual file name
+start_screen(default_info_text, "B_1_Mini_Game_Pia.py")  # Replace with your actual file name
