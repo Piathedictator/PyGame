@@ -5,7 +5,7 @@ import os
 
 #player_name = sys.argv[1]
 #score_pong = sys.argv[2] if len(sys.argv) > 1 else "0"
-score_pong = int(os.environ["SCORE_PONG"])
+score_pong = os.environ.get("SCORE_PONG")
 
 if __name__ == "__main__":
     # Benutzerdefinierter Info-Text

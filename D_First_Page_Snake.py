@@ -3,7 +3,7 @@ import pygame
 from B_First_Page_Pia import start_screen  # Import der Funktion, aber kein automatischer Aufruf mehr!
 #from F_End_Page import total_score_2048
 
-total_score_2048 = int(os.environ["TOTAL_SCORE_2048"])
+total_score_2048 = os.environ.get("TOTAL_SCORE_2048")
 
 if __name__ == "__main__":
     # Benutzerdefinierter Info-Text

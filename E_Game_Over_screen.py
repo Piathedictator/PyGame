@@ -3,11 +3,17 @@ import random
 import os
 import sys
 
+#from B_1_Mini_Game_Pia import score_pong
+#from D_First_Page_Snake import total_score_2048
+
 #from D_1_mini_game_Frank import score_snake
 
 pygame.init()
 
-score_snake = int(os.environ.get("SCORE_SNAKE", 0))
+score_pong = os.environ.get("SCORE_PONG")
+total_score_2048 = os.environ.get("TOTAL_SCORE_2048")
+score_snake = os.environ.get("SCORE_SNAKE")
+
 
 # Fenstergröße
 width, height = 600, 600
