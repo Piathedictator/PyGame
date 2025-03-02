@@ -7,8 +7,8 @@ total_score_2048 = int(os.environ["TOTAL_SCORE_2048"])
 
 if __name__ == "__main__":
     # Benutzerdefinierter Info-Text
-    snake_title_text = "Das nächste Spiel ist Snake!"
-    snake_instruction_text = "Klicke auf Start um zu beginnen"
+    snake_title_text = f"Dein Score ist {total_score_2048}!"
+    snake_instruction_text = "Das nächste Spiel ist Snake"
     snake_info_text = [
         "Steuere die Schlange mit den Pfeiltasten.", 
         "Verschlinge die Früchte und sammle Punkte.",
