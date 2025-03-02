@@ -10,10 +10,10 @@ import sys
 
 pygame.init()
 
-score_pong = os.environ.get("SCORE_PONG")
-total_score_2048 = os.environ.get("TOTAL_SCORE_2048")
-score_snake = os.environ.get("SCORE_SNAKE")
-
+score_pong = int(os.getenv("SCORE_PONG", "0"))
+total_score_2048 = int(os.getenv("TOTAL_SCORE_2048", "0"))
+score_snake = int(os.getenv("SCORE_SNAKE", "0"))
+final_score = score_pong + total_score_2048 + score_snake
 
 # Fenstergröße
 width, height = 600, 600
