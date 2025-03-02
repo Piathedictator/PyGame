@@ -3,6 +3,8 @@ import random
 import sys
 import os
 
+#from A_First_Page_generall import player_name
+
 pygame.init()
 
 # Fenstergröße
@@ -113,5 +115,7 @@ while running:
 
 pygame.quit()
 
+os.environ["SCORE_PONG"] = str(score_pong)
 command = "python3" if sys.platform != "win32" else "python"
-os.system(f"{command} C_First_Page_2048.py {score_pong}")
+#os.system(f"{command} C_First_Page_2048.py {player_name} {score_pong}")
+os.system(f"{command} C_First_Page_2048.py")

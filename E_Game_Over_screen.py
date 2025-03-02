@@ -3,7 +3,11 @@ import random
 import os
 import sys
 
+#from D_1_mini_game_Frank import score_snake
+
 pygame.init()
+
+score_snake = int(os.environ.get("SCORE_SNAKE", 0))
 
 # Fenstergröße
 width, height = 600, 600

@@ -168,6 +168,7 @@ def main():
             running = False  # Stop the game loop
 
     pygame.quit()  # Quit Pygame after the game loop
+    os.environ["TOTAL_SCORE_2048"] = str(total_score_2048)
     command = "python3" if sys.platform != "win32" else "python"
     os.system(f"{command} D_First_Page_Snake.py")
 
