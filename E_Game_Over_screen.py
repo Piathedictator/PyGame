@@ -14,6 +14,7 @@ score_pong = int(os.getenv("SCORE_PONG", "0"))
 total_score_2048 = int(os.getenv("TOTAL_SCORE_2048", "0"))
 score_snake = int(os.getenv("SCORE_SNAKE", "0"))
 final_score = score_pong + total_score_2048 + score_snake
+os.environ["FINAL_SCORE"] = str(final_score)
 
 # Fenstergröße
 width, height = 600, 600
@@ -70,7 +71,15 @@ def start_screen(final_score):
     message = random.choice(message_group)
     parts = message.split(": ")  # Nachricht an ':' teilen
 
-    start_button = pygame.Rect(width / 2 - 75, height / 2 + 100, 150, 50)  # Start-Button um 100 nach unten verschieben
+    # Button-Positionen
+    button_width = 150
+    button_height = 50
+    spacing = 20  # Abstand zwischen den Buttons
+
+    restart_button = pygame.Rect(width / 2 - button_width / 2, height / 2 + 100, button_width, button_height)
+    bestenliste_button = pygame.Rect(restart_button.right + spacing, height / 2 + 100, button_width,
+                                     button_height)  # New button
+
     running = True
 
     while running:
@@ -80,7 +89,8 @@ def start_screen(final_score):
         score_text = f"Endpunktestand:! {final_score}"
 
         # Zeilenumbruch in `score_text` einfügen
-        score_lines = score_text.split("! ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
+        score_lines = score_text.split(
+            "! ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
         score_y = 100  # Startposition für die erste Zeile
         for line in score_lines:
             score_part = font_title.render(line, True, red)
@@ -90,12 +100,19 @@ def start_screen(final_score):
         # Nachricht anzeigen (verschoben)
         for i, part in enumerate(parts):
             part_text = font_instruction.render(part, True, white)
-            screen.blit(part_text, (width / 2 - part_text.get_width() / 2, 250 + i * 40))  # Nachrichten um 100 nach unten verschoben
+            screen.blit(part_text, (
+            width / 2 - part_text.get_width() / 2, 250 + i * 40))  # Nachrichten um 100 nach unten verschoben
 
-        # Start Button (verschoben)
-        pygame.draw.rect(screen, white, start_button)
+        # Restart Button (verschoben)
+        pygame.draw.rect(screen, white, restart_button)
         button_text = font.render("Restart", True, (0, 0, 0))
-        screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 110))  # Start-Button weiter nach unten verschoben
+        screen.blit(button_text, (
+        width / 2 - button_text.get_width() / 2, height / 2 + 110))  # Start-Button weiter nach unten verschoben
+
+        # Draw Bestenliste Button
+        pygame.draw.rect(screen, white, bestenliste_button)  # New line to draw the Bestenliste button
+        bestenliste_text = font.render("Bestenliste", True, (0, 0, 0))  # New line for button text
+        screen.blit(bestenliste_text, (bestenliste_button.x + (button_width / 2) - (bestenliste_text.get_width() / 2), height / 2 + 110))  # New line to position text
 
         pygame.display.flip()
 
@@ -103,10 +120,13 @@ def start_screen(final_score):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
-                running = False
-
-start_screen(150)  # Beispielaufruf mit einem final_score von 150
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button.collidepoint(event.pos):
+                    running = False
+                elif bestenliste_button.collidepoint(event.pos):  # New condition for Bestenliste button
+                    command = "python3" if sys.platform != "win32" else "python"
+                    os.system(f"{command} F_End_Page.py")
+start_screen(final_score)
 
 # Weiteres Spiel starten
 next_file = "A_First_Page_generall.py"
