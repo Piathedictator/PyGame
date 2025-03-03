@@ -15,4 +15,4 @@ if __name__ == "__main__":
         "Steuere die Schlange mit den Pfeiltasten.", 
         "Verschlinge die Früchte und sammle Punkte.",
     ]
-    start_screen(snake_title_text, snake_instruction_text, snake_info_text, "D_1_Mini_Game_Frank.py") # Nächstes Spiel starten
+    start_screen(snake_title_text, snake_instruction_text, snake_info_text, "D_mini_game_Frank.py") # Nächstes Spiel starten
