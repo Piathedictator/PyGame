@@ -14,6 +14,7 @@ player_name = str(os.getenv("PLAYER_NAME", "PLAYER"))
 final_game_score = score_pong + total_score_2048 + score_snake
 
 save_game_score(player_name, final_game_score)
+os.environ["FINAL_GAME_SCORE"] = str(final_game_score)
 
 pygame.init()
 

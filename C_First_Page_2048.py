@@ -1,5 +1,5 @@
 import pygame
-from B_First_Page_Pia import start_screen   #, player_name
+from B_First_Page_Pia import start_screen
 import sys
 import os
 
