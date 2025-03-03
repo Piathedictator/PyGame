@@ -1,15 +1,18 @@
+from typing import final
+
 import pygame
 import random
 import os
 import sys
 
 # Übergeben der Scores der einzelnen Mini Games. Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
-score_pong = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 0
-total_score_2048 = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 0
-score_snake = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3].isdigit() else 0
+score_pong = int(os.getenv("SCORE_PONG", "0"))
+total_score_2048 = int(os.getenv("TOTAL_SCORE_2048", "0"))
+score_snake = int(os.getenv("SCORE_SNAKE", "0"))
+player_name = str(os.getenv("PLAYER_NAME", "PLAYER"))
 
 # Gesamtpunktzahl berechnen
-total_game_score = score_pong + total_score_2048 + score_snake
+final_game_score = score_pong + total_score_2048 + score_snake
 
 pygame.init()
 
@@ -23,15 +26,14 @@ background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
 white = (255, 255, 255)
-green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_score
+green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_game_score
 
 font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
 font_instruction = pygame.font.Font(None, 30)
 
-total_game_score = score_pong + total_score_2048 + score_snake
 
-def start_screen(final_score):
+def start_screen(final_game_score):
     # Game Over Nachrichten für unterschiedliche Punktzahlen
     game_over_messages_low = [
         "Das ist ja nicht so gut gelaufen.: Probier's nochmal!",
@@ -66,10 +68,10 @@ def start_screen(final_score):
         "Na, bist du Teil der besten Liste?",
     ]
 
-    # Auswahl der richtigen Nachrichten basierend auf dem final_score
-    if total_game_score < 100:
+    # Auswahl der richtigen Nachrichten basierend auf dem final_game_score
+    if final_game_score < 100:
         message_group = game_over_messages_low
-    elif total_game_score < 200:
+    elif final_game_score < 200:
         message_group = game_over_messages_medium
     else:
         message_group = game_over_messages_high
@@ -87,8 +89,8 @@ def start_screen(final_score):
     while running:
         screen.blit(background, (0, 0))
 
-        # Zeile für den final_score
-        score_text = f"Endpunktestand:! {final_score}"
+        # Zeile für den final_game_score
+        score_text = f"Endpunktestand:! {final_game_score}"
 
         # Zeilenumbruch in `score_text` einfügen
         score_lines = score_text.split("! ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
@@ -129,6 +131,6 @@ def start_screen(final_score):
                 running = False
                 # Weiteres Spiel starten
                 os.system("python F_Game_scores.py")
-start_screen(total_game_score)  # Beispielaufruf mit einem final_score von 150
+start_screen(final_game_score)  # Beispielaufruf mit einem final_game_score von 150
 
 

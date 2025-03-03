@@ -112,7 +112,7 @@ while True:
 
     # Game Over Bedingungen
     if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
-        
+        os.environ["SCORE_SNAKE"] = str(score_snake)
         next_file = "E_End_Page.py"
         command = "python3" if sys.platform != "win32" else "python"
         os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
@@ -121,6 +121,7 @@ while True:
     # Snake Körper berühren (Selbstkollision)
     for block in snake_body[1:]:
         if snake_position[0] == block[0] and snake_position[1] == block[1]:
+            os.environ["SCORE_SNAKE"] = str(score_snake)
             next_file = "E_End_Page.py"
             command = "python3" if sys.platform != "win32" else "python"
             os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
