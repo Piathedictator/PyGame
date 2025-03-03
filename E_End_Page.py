@@ -1,9 +1,8 @@
-from typing import final
-
 import pygame
 import random
 import os
 import sys
+from G_Game_Scores import save_game_score
 
 # Übergeben der Scores der einzelnen Mini Games. Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
 score_pong = int(os.getenv("SCORE_PONG", "0"))
@@ -13,6 +12,8 @@ player_name = str(os.getenv("PLAYER_NAME", "PLAYER"))
 
 # Gesamtpunktzahl berechnen
 final_game_score = score_pong + total_score_2048 + score_snake
+
+save_game_score(player_name, final_game_score)
 
 pygame.init()
 
@@ -132,7 +133,7 @@ def start_screen(final_game_score):
                 running = False
                 # Weiteres Spiel starten
                 command = "python3" if sys.platform != "win32" else "python"
-                os.system("python F_Game_scores.py")
+                os.system("f {command} F_Game_scores.py")
 start_screen(final_game_score)  # Beispielaufruf mit einem final_game_score von 150
 
 
