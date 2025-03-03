@@ -38,7 +38,6 @@ change_to = direction
 
 # Score
 score_snake = 0
-game_over_flag = False
 
 # Schriftart
 font = pygame.font.Font(None, 36)
@@ -51,6 +50,7 @@ def draw_score():
 # Game Over Funktion
 def game_over():
     pygame.quit()  # Pygame beenden
+    
 
 # Main Game Loop
 while True:
@@ -96,6 +96,7 @@ while True:
     else:
         snake_body.pop()
 
+
     # Neues Obst spawnen
     if not fruit_spawn:
         fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
@@ -109,30 +110,21 @@ while True:
         pygame.draw.rect(screen, blue, pygame.Rect(pos[0], pos[1], 10, 10))
     pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
-    # Game Over Conditions
-    if snake_position[0] < 0 or snake_position[0] > WIDTH - 10 or snake_position[1] < 0 or snake_position[
-        1] > HEIGHT - 10:
-        game_over_flag = True
+    # Game Over Bedingungen
+    if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
+        
+        next_file = "E_End_Page.py"
+        command = "python3" if sys.platform != "win32" else "python"
+        os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
+        game_over()
+
+    # Snake Körper berühren (Selbstkollision)
     for block in snake_body[1:]:
         if snake_position[0] == block[0] and snake_position[1] == block[1]:
-            game_over_flag = True
-
-    if game_over_flag:
-        # Display Game Over screen
-
-        #screen.blit(GAMEOVER_IMAGE, (0, 0))
-        draw_score()
-        pygame.display.update()
-        pygame.time.wait(2000)  # Wait for 2 seconds before quitting
-
-        os.environ["SCORE_SNAKE"] = str(score_snake)
-        next_file = "F_End_Page.py"
-        command = "python3" if sys.platform != "win32" else "python"
-        # os.system(f"{command} {next_file} {score_snake}")  # Score_snake Variable muss ergänzt werden
-        os.system(f"{command} {next_file}")
-
-        pygame.quit()
-        exit()
+            next_file = "E_End_Page.py"
+            command = "python3" if sys.platform != "win32" else "python"
+            os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
+            game_over()
 
     # Punktestand anzeigen
     draw_score()
