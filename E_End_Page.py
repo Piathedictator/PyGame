@@ -134,7 +134,7 @@ def start_screen(final_game_score):
                 running = False
                 # Weiteres Spiel starten
                 command = "python3" if sys.platform != "win32" else "python"
-                os.system(f"{command} F_Bestenliste")
-start_screen(final_game_score)  # Beispielaufruf mit einem final_game_score von 150
+                os.system(f"{command} F_Bestenliste.py")
+start_screen(final_game_score)
 
 
