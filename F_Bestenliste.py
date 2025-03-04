@@ -15,17 +15,23 @@ pygame.init()
 
 # Set up some constants
 width, height = 600, 600
-background_color = (0, 0, 0)
-text_color = (255, 255, 255)
-button_color = (255, 0, 0)
-
-# Set up the display
-screen = pygame.display.set_mode((width, height))
+screen = pygame.display.set_mode((width, height)) # Set up the display
 pygame.display.set_caption("Bestenliste")
 
+background = pygame.image.load("Z_background_pong.jpg")  # Bild laden und anpassen
+background_size = pygame.transform.scale(background, (width, height))
+
+
+# Farben und Schriftarten
+white = (255, 255, 255)
+green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_game_score
+#text_color = (255, 255, 255)
+#button_color = (255, 0, 0)
+
+
 # Set up the font
-font_title = pygame.font.Font(None, 50)
-font = pygame.font.Font(None, 30)
+font_title = pygame.font.Font(None, 70)
+font = pygame.font.Font(None, 50)
 
 # Load the best player scores from the CSV file
 best_player_scores = []
@@ -51,26 +57,26 @@ while running:
             running = False
 
     # Draw everything
-    screen.fill(background_color)
+    screen.blit(background, (0, 0))
 
     # Draw the final game score
     score_text = f"Endpunktestand:! {final_game_score}"
     score_lines = score_text.split("! ")
     score_y = 100
     for line in score_lines:
-        score_part = font_title.render(line, True, text_color)
+        score_part = font_title.render(line, True, green)
         screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
         score_y += 60
 
     # Draw the list of best players
-    best_player_y = 200
+    best_player_y = 250
     for player, score in best_player_scores:
-        player_text = font.render(f"{player}: {score}", True, text_color)
-        screen.blit(player_text, (width / 2 - player_text.get_width() / 2, best_player_y))
+        player_text = font.render(f"{player}: {score}", True, white)
+        screen.blit(player_text, (250, best_player_y))
         best_player_y += 40
 
     # Draw the "ENDE" button
-    pygame.draw.rect(screen, button_color, ende_button)
+    pygame.draw.rect(screen, white, ende_button)
     ende_text = font.render("ENDE", True, (0, 0, 0))
     screen.blit(ende_text, (width / 2 - ende_text.get_width() / 2, height - 90))
 

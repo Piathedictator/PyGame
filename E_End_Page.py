@@ -23,7 +23,7 @@ width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Ende")
 
-background = pygame.image.load("Z_background_pong.jpg")  # Bild laden und anpassen
+background = pygame.image.load("Z_background_pages.jpg")  # Bild laden und anpassen
 background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
@@ -134,7 +134,7 @@ def start_screen(final_game_score):
                 running = False
                 # Weiteres Spiel starten
                 command = "python3" if sys.platform != "win32" else "python"
-                os.system("f {command} F_Game_scores.py")
+                os.system(f"{command} F_Bestenliste")
 start_screen(final_game_score)  # Beispielaufruf mit einem final_game_score von 150
 
 
