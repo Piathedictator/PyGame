@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+import csv
 
 pygame.init()
 
@@ -28,6 +29,23 @@ info_text = [
     "Spiele dich durch drei Mini-Spiele",
     "        und sammle Punkte!",
     ]
+
+def check_player_name(name): #checking if the username exists already in the csv file
+    try:
+        with open('player_scores.csv', 'r') as file:
+            reader = csv.reader(file)
+            existing_names = [row[0] for row in reader]
+            if name in existing_names:
+                base_name, *suffix = name.rsplit(' ', 1)
+                if suffix and suffix[0].isdigit():
+                    new_name = f"{base_name} {int(suffix[0]) + 1}"
+                else:
+                    new_name = f"{name} 1"
+                return check_player_name(new_name)
+            else:
+                return name
+    except FileNotFoundError:
+        return name
 
 def start_screen():
     global info_visible, player_name
@@ -68,7 +86,8 @@ def start_screen():
             #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
-                    os.environ["PLAYER_NAME"] = str(player_name)
+                    final_player_name = check_player_name(player_name)
+                    os.environ["PLAYER_NAME"] = str(final_player_name)
                     command = "python3" if sys.platform != "win32" else "python"
                     #os.system(f"{command} B_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
                     os.system(f"{command} B_First_Page_Pia.py")
