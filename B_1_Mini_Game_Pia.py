@@ -3,7 +3,6 @@ import random
 import sys
 import os
 
-#from A_First_Page_generall import player_name
 
 pygame.init()
 

@@ -8,10 +8,9 @@ import os
 score_pong = int(os.getenv("SCORE_PONG", "0"))
 
 if __name__ == "__main__":
-    # Benutzerdefinierter Info-Text
     alvaro_title_text = f"Dein Score ist {score_pong}!"
     alvaro_instruction_text = "Das nächste Spiel ist 2048"
-    alvaro_info_text = [
+    alvaro_info_text = [ # Benutzerdefinierter Info-Text
         "Benutze die Pfeiltasten, um Zahlen ", 
         "zu verschieben und gleiche zu addieren.",
         "Das Ziel ist es die Zahl 2048 erreichen.",

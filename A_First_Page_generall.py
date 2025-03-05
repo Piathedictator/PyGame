@@ -40,7 +40,7 @@ def check_player_name(name): #checking if the username exists already in the csv
                 if suffix and suffix[0].isdigit():
                     new_name = f"{base_name} {int(suffix[0]) + 1}"
                 else:
-                    new_name = f"{name} 2"
+                    new_name = f"{name} 1"
                 return check_player_name(new_name)
             else:
                 return name
