@@ -28,6 +28,7 @@ background = pygame.transform.scale(background, (width, height))
 
 # Farben und Schriftarten
 white = (255, 255, 255)
+black = pygame.Color(0, 0, 0)
 green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_game_score
 
 font_title = pygame.font.Font(None, 70)
@@ -71,9 +72,9 @@ def start_screen(final_game_score):
     ]
 
     # Auswahl der richtigen Nachrichten basierend auf dem final_game_score
-    if final_game_score < 100:
+    if final_game_score < 300:
         message_group = game_over_messages_low
-    elif final_game_score < 200:
+    elif final_game_score < 500:
         message_group = game_over_messages_medium
     else:
         message_group = game_over_messages_high
@@ -104,7 +105,7 @@ def start_screen(final_game_score):
 
         # Nachricht anzeigen
         for i, part in enumerate(parts):
-            part_text = font_instruction.render(part, True, white)
+            part_text = font_instruction.render(part, True, black)
             screen.blit(part_text, (width / 2 - part_text.get_width() / 2, 250 + i * 40))  # Nachrichten um 100 nach unten verschoben
 
         # Restart Button
