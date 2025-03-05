@@ -7,7 +7,7 @@ import sys
 pygame.init()
 
 # Spielfrequenz
-snake_speed = 15
+snake_speed = 30
 
 # Defining colors
 black = pygame.Color(0, 0, 0)
@@ -107,8 +107,8 @@ while True:
 
     # Snake und Obst zeichnen
     for pos in snake_body:
-        pygame.draw.rect(screen, blue, pygame.Rect(pos[0], pos[1], 10, 10))
-    pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
+        pygame.draw.rect(screen, orange, pygame.Rect(pos[0], pos[1], 10, 10))
+        pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
     # Game Over Bedingungen
     if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
