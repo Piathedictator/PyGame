@@ -12,7 +12,7 @@ SIZE = 4
 TILE_SIZE = 127.5
 GAP_SIZE = 10
 MARGIN = 45
-SCREEN_SIZE = SIZE * TILE_SIZE + (SIZE + 1) * GAP_SIZE + 2 * MARGIN
+SCREEN_SIZE = SIZE * TILE_SIZE + (SIZE + 1) * GAP_SIZE + 2 * MARGIN #tilespace + number/size of gap between tiles + margin to window edge
 SCREEN_WIDTH = SCREEN_SIZE
 SCREEN_HEIGHT = SCREEN_SIZE
 
@@ -32,7 +32,7 @@ TILE_COLORS = {
     1024: (237, 197, 63),
     2048: (237, 194, 46)
 }
-FONT_COLOR = (0, 0, 0)
+FONT_COLOR = (0, 0, 0) #black font
 FONT = pygame.font.SysFont('arial', 40)
 
 #############################
@@ -42,13 +42,13 @@ def draw_tile(screen, value, x, y): #defining the appearance of the single tiles
     color = TILE_COLORS.get(value, (60, 58, 50)) #background color of the tile
     rect = pygame.Rect(x, y, TILE_SIZE, TILE_SIZE) #tile size, square
     pygame.draw.rect(screen, color, rect)
-    if value != 0: #tile labeling _ color and positioning
-        text = FONT.render(str(value), True, FONT_COLOR)
-        text_rect = text.get_rect(center=(x + TILE_SIZE / 2, y + TILE_SIZE / 2))
+    if value != 0: #tile labeling _ color and positioning for non-empty tiles
+        text = FONT.render(str(value), True, FONT_COLOR) #color
+        text_rect = text.get_rect(center=(x + TILE_SIZE / 2, y + TILE_SIZE / 2)) #centering
         screen.blit(text, text_rect)
 def draw_board(screen, board): #defining the general board appearance
     screen.fill(BACKGROUND_COLOR)
-    for row in range(SIZE): #setting up the grid - row and colum
+    for row in range(SIZE): #setting up the grid - iterate row and colum
         for col in range(SIZE):
             value = board[row][col]
             x = MARGIN + GAP_SIZE + col * (TILE_SIZE + GAP_SIZE) #spacing between tiles
@@ -60,7 +60,7 @@ def draw_board(screen, board): #defining the general board appearance
 def add_new_tile(board): #adding new squares with a number either 2 or 4 
     empty_tiles = [(r, c) for r in range(SIZE) for c in range(SIZE) if board[r][c] == 0] #defining empty tiles
     if empty_tiles: #adding new squares only to empty tiles
-        row, col = random.choice(empty_tiles)
+        row, col = random.choice(empty_tiles) #random new tile
         board[row][col] = 2 if random.random() < 0.65 else 4 #new square with number 2 or 4 - the chance for a 2 is greater
 
 def slide_row_left(row):
@@ -71,9 +71,9 @@ def slide_row_left(row):
         if new_row[i] == new_row[i + 1] and new_row[i] != 0: #comparing the elements next to each other and doubling the first value if equivalent, setting 2. value 0
             if new_row[i] == 2048:  # If the tile is already 2048, it cannot merge
                 continue
-            new_row[i] *= 2
+            new_row[i] *= 2 #doubling score
             score_2048 += new_row[i]  # Update score
-            new_row[i + 1] = 0
+            new_row[i + 1] = 0 #next tile set 0 -> merge
             if new_row[i] == 2048:  # Check if it becomes 2048
                 score_2048 += 1000  # Add bonus for reaching 2048
     new_row = [i for i in new_row if i != 0] #filter of all 0s
