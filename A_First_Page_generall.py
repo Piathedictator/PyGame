@@ -84,14 +84,14 @@ def start_screen():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     player_name = player_name[:-1]
-                elif event.key == pygame.K_RETURN and player_name:
+                elif event.key == pygame.K_RETURN and player_name and len(player_name) <= 9:
                     final_player_name = check_player_name(player_name)
                     os.environ["PLAYER_NAME"] = str(final_player_name)
                     command = "python3" if sys.platform != "win32" else "python"
                     pygame.quit()
                     subprocess.call([command, "B_First_Page_Pia.py"])
                     sys.exit()
-                else:
+                elif len(player_name) < 9:  # Only add character if under limit
                     player_name += event.unicode
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
