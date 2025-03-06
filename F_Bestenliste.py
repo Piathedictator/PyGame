@@ -1,9 +1,7 @@
 import pygame
 import os
 import csv
-import sys
-#from G_Game_Scores import save_game_score
-#from B_First_Page_Pia import start_screen
+import Y_config
 
 
 player_name = str(os.getenv("PLAYER_NAME", "PLAYER"))
@@ -14,20 +12,12 @@ final_game_score = int(os.getenv("FINAL_GAME_SCORE", "0"))
 pygame.init()
 
 # Set up some constants
-width, height = 600, 600
+width, height = Y_config.WIDTH, Y_config.HEIGHT
 screen = pygame.display.set_mode((width, height)) # Set up the display
 pygame.display.set_caption("Bestenliste")
 
 background = pygame.image.load("Z_background_pong.jpg")  # Bild laden und anpassen
 background_size = pygame.transform.scale(background, (width, height))
-
-
-# Farben und Schriftarten
-white = (255, 255, 255)
-green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_game_score
-#text_color = (255, 255, 255)
-#button_color = (255, 0, 0)
-
 
 # Set up the font
 font_title = pygame.font.Font(None, 70)
@@ -68,19 +58,19 @@ while running:
     score_lines = score_text.split("! ")
     score_y = 100
     for line in score_lines:
-        score_part = font_title.render(line, True, green)
+        score_part = font_title.render(line, True, Y_config.GREEN)
         screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
         score_y += 60
 
     # Draw the list of best players
     best_player_y = 250
     for player, score in best_player_scores:
-        player_text = font.render(f"{player}: {score}", True, white)
+        player_text = font.render(f"{player}: {score}", True, Y_config.WHITE)
         screen.blit(player_text, (250, best_player_y))
         best_player_y += 40
 
     # Draw the "ENDE" button
-    pygame.draw.rect(screen, white, ende_button)
+    pygame.draw.rect(screen, Y_config.WHITE, ende_button)
     ende_text = font.render("ENDE", True, (0, 0, 0))
     screen.blit(ende_text, (width / 2 - ende_text.get_width() / 2, height - 90))
 

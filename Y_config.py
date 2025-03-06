@@ -1,10 +1,19 @@
 #Größen und Farben, sowie Schriftformate die in allen Dateien verwendet werden
 import pygame
+import os
+import sys
+pygame.init
 
-width, height = 600, 600
-screen = pygame.display.set_mode((width, height))
+#Größe des Screens
+WIDTH, HEIGHT = 600, 600
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
-WHITE, BLUE, GRAY, PINK, YELLOW, BLACK = ((255, 255, 255), (173, 216, 230), (180, 180, 180),(255, 0, 255), (255, 255, 102), (0, 0, 0))
-font = pygame.font.Font(None, 50)
-font_titel = pygame.font.Font(None, 70)
-font_instruction = pygame.font.Font(None, 30)
+#Verwendete Farben
+WHITE, BLACK, BLUE, GRAY, PINK, YELLOW, GREEN, ORANGE = ((255, 255, 255), (0, 0, 0), (173, 216, 230), (180, 180, 180),(255, 0, 255), (255, 255, 102), (0, 255, 0), (255, 165, 0))
+
+# Schriftarten
+'''
+FONT_30 = pygame.font.Font(None, 30) 
+FONT_50 = pygame.font.Font(None, 50)
+FONT_70 = pygame.font.Font(None, 70)
+'''

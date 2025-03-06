@@ -2,6 +2,7 @@ import pygame
 import random
 import os
 import sys
+import Y_config
 
 # Initialisierung von Pygame
 pygame.init()
@@ -9,27 +10,24 @@ pygame.init()
 # Spielfrequenz
 snake_speed = 30
 
-# Defining colors
-black = pygame.Color(0, 0, 0)
-white = pygame.Color(255, 255, 255)
-green = pygame.Color(0, 255, 0)
-orange = pygame.Color(255, 165, 0)
+# Schriftart
+font = pygame.font.Font(None, 36)
 
 # Spielfeldgröße und Hintergrundbild
-WIDTH, HEIGHT = 600, 600
+
 GRID_SIZE = 10
 BACKGROUND_IMAGE = pygame.image.load("Z_BackSnake.jpg")  # Hintergrundbild laden
-BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))
+BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (Y_config.WIDTH, Y_config.HEIGHT))
 
 # Fenster erstellen
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((Y_config.WIDTH, Y_config.HEIGHT))
 pygame.display.set_caption("Snake Game")
 clock = pygame.time.Clock()
 
 # Snake Initialisierung
 snake_position = [100, 50]
 snake_body = [[100, 50], [90, 50], [80, 50], [70, 50]]
-fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+fruit_position = [random.randrange(1, (Y_config.WIDTH//10)) * 10, random.randrange(1, (Y_config.HEIGHT//10)) * 10]
 fruit_spawn = True
 direction = 'RIGHT'
 change_to = direction
@@ -37,18 +35,10 @@ change_to = direction
 # Score
 score_snake = 0
 
-# Schriftart
-font = pygame.font.Font(None, 36)
-
 # Score-Anzeige Funktion
 def draw_score():
-    score_text = font.render(f"Score: {score_snake}", True, white)
+    score_text = font.render(f"Score: {score_snake}", True, Y_config.WHITE)
     screen.blit(score_text, (10, 10))
-
-# Game Over Funktion
-def game_over():
-    pygame.quit()  # Pygame beenden
-    sys.exit()  # Das ganze Skript beenden
 
 # Main Game Loop
 while True:
@@ -58,7 +48,7 @@ while True:
                 pygame.quit()
                 exit()
         if event.type == pygame.QUIT:
-            game_over()
+            pygame.quit() # Pygame beenden
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 change_to = 'UP'
@@ -99,7 +89,7 @@ while True:
 
     # Neues Obst spawnen
     if not fruit_spawn:
-        fruit_position = [random.randrange(1, (WIDTH//10)) * 10, random.randrange(1, (HEIGHT//10)) * 10]
+        fruit_position = [random.randrange(1, (Y_config.WIDTH//10)) * 10, random.randrange(1, (Y_config.HEIGHT//10)) * 10]
     fruit_spawn = True
 
     # Hintergrund anzeigen
@@ -107,11 +97,11 @@ while True:
 
     # Snake und Obst zeichnen
     for pos in snake_body:
-        pygame.draw.rect(screen, green, pygame.Rect(pos[0], pos[1], 10, 10))
-    pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
+        pygame.draw.rect(screen, Y_config.GREEN, pygame.Rect(pos[0], pos[1], 10, 10))
+    pygame.draw.rect(screen, Y_config.ORANGE, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
     # Game Over Bedingungen
-    if snake_position[0] < 0 or snake_position[0] >= WIDTH or snake_position[1] < 0 or snake_position[1] >= HEIGHT:
+    if snake_position[0] < 0 or snake_position[0] >= Y_config.WIDTH or snake_position[1] < 0 or snake_position[1] >= Y_config.HEIGHT:
         break
 
     # Snake Körper berühren (Selbstkollision)
