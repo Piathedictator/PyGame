@@ -16,7 +16,7 @@ width, height = Y_config.WIDTH, Y_config.HEIGHT
 screen = pygame.display.set_mode((width, height)) # Set up the display
 pygame.display.set_caption("Bestenliste")
 
-background = pygame.image.load("Z_background_pong.jpg")  # Bild laden und anpassen
+background = pygame.image.load("Z_background.jpg")  # Bild laden und anpassen
 background_size = pygame.transform.scale(background, (width, height))
 
 # Set up the font
@@ -65,7 +65,7 @@ while running:
     # Draw the list of best players
     best_player_y = 250
     for player, score in best_player_scores:
-        player_text = font.render(f"{player}: {score}", True, Y_config.WHITE)
+        player_text = font.render(f"{player}: {score}", True, Y_config.BLACK)
         screen.blit(player_text, (250, best_player_y))
         best_player_y += 40
 

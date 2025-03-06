@@ -17,6 +17,10 @@ SCREEN_SIZE = SIZE * TILE_SIZE + (SIZE + 1) * GAP_SIZE + 2 * MARGIN #tilespace +
 SCREEN_WIDTH = SCREEN_SIZE
 SCREEN_HEIGHT = SCREEN_SIZE
 
+# Hintergrundbild laden und skalieren
+background = pygame.image.load("Z_2048.png")
+background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
 # variables - styling: font, color
 BACKGROUND_COLOR = (255, 251, 240)
 EMPTY_TILE_COLOR = (205, 192, 180)
@@ -46,7 +50,7 @@ def draw_tile(screen, value, x, y): #defining the appearance of the single tiles
         text_rect = text.get_rect(center=(x + TILE_SIZE / 2, y + TILE_SIZE / 2)) #centering
         screen.blit(text, text_rect)
 def draw_board(screen, board): #defining the general board appearance
-    screen.fill(BACKGROUND_COLOR)
+    screen.blit(background, (0, 0)) # Hintergrund einblenden
     for row in range(SIZE): #setting up the grid - iterate row and colum
         for col in range(SIZE):
             value = board[row][col]

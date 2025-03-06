@@ -24,7 +24,7 @@ width, height = Y_config.WIDTH, Y_config.HEIGHT
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Ende")
 
-background = pygame.image.load("Z_background_pages.jpg")  # Bild laden und anpassen
+background = pygame.image.load("Z_background.jpg")  # Bild laden und anpassen
 background = pygame.transform.scale(background, (width, height))
 
 font_title = pygame.font.Font(None, 70)
@@ -35,35 +35,35 @@ font_instruction = pygame.font.Font(None, 30)
 def start_screen(final_game_score):
     # Game Over Nachrichten für unterschiedliche Punktzahlen
     game_over_messages_low = [
-        "Das ist ja nicht so gut gelaufen. Probier's nochmal!",
-        "Anfängerfehler. Jetzt streng dich mal an!",
-        "Hätte hätte Snake Game Kette. Da machste nix, probier's nochmal!",
-        "Digga, dein Versagen kotzt mich an. Vallah!",
-        "Du hast verloren. Geh nach Hause.",
-        "Du hast schwach angefangen. Dann stark nachgelassen!",
+        "Das ist ja nicht so gut gelaufen.: Probier's nochmal!",
+        "Anfängerfehler.: Jetzt streng dich mal an!",
+        "Hätte hätte Snake Game Kette.: Da machste nix, probier's nochmal!",
+        "Digga, dein Versagen kotzt mich an.: Vallah!",
+        "Du hast verloren.: Geh nach Hause.",
+        "Du hast schwach angefangen.: Dann stark nachgelassen!",
         "Loooooooser!!!",
         "Digga, was war das?!",
         "Spielst du mit den Füßen oder wat?",
-        "Liegt dein Versagen am Spiel? Ich denke nicht."
+        "Liegt dein Versagen am Spiel?: Ich denke nicht."
     ]
     
     game_over_messages_medium = [
         "Ganz gut. Aber noch nicht genug!",
-        "Na, das war schon besser. Mehr Konzentration!",
-        "Fast geschafft. Aber noch ist nicht alles gewonnen!",
-        "Mühlen mahlen langsam. Deine Besonders.",
-        "Gar nicht schlecht. Hast du jemand dafür bezahlt?",
+        "Na, das war schon besser.: Mehr Konzentration!",
+        "Fast geschafft.: Aber noch ist nicht alles gewonnen!",
+        "Mühlen mahlen langsam.: Deine Besonders.",
+        "Gar nicht schlecht.: Hast du jemand dafür bezahlt?",
         "Ganz gut, aber da geht noch mehr!"
     ]
     
     game_over_messages_high = [
         "Super! Das war richtig stark!",
         "Top Leistung! Fast perfekt!",
-        "Du hast es richtig drauf! Weiter so!",
+        "Du hast es richtig drauf!: Weiter so!",
         "Das war überraschend gut",
         "Weeeee are the champioooons.",
         "Unheimlich gut.",
-        "Das war zu gut. Hast du geschummelt?",
+        "Das war zu gut.: Hast du geschummelt?",
         "Na, bist du Teil der besten Liste?",
     ]
 
@@ -93,7 +93,7 @@ def start_screen(final_game_score):
         score_lines = score_text.split(" ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
         score_y = 100  # Startposition für die erste Zeile
         for line in score_lines:
-            score_part = font_title.render(line, True, Y_config.GREEN)
+            score_part = font_title.render(line, True, Y_config.BLACK)
             screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
             score_y += 60  # Vertikaler Abstand für die nächste Zeile
 

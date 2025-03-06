@@ -16,7 +16,7 @@ font = pygame.font.Font(None, 36)
 # Spielfeldgröße und Hintergrundbild
 
 GRID_SIZE = 10
-BACKGROUND_IMAGE = pygame.image.load("Z_BackSnake.jpg")  # Hintergrundbild laden
+BACKGROUND_IMAGE = pygame.image.load("Z_snake.jpg")  # Hintergrundbild laden
 BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (Y_config.WIDTH, Y_config.HEIGHT))
 
 # Fenster erstellen

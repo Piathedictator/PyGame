@@ -9,7 +9,20 @@ WIDTH, HEIGHT = 600, 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 #Verwendete Farben
-WHITE, BLACK, BLUE, GRAY, PINK, YELLOW, GREEN, ORANGE = ((255, 255, 255), (0, 0, 0), (173, 216, 230), (180, 180, 180),(255, 0, 255), (255, 255, 102), (0, 255, 0), (255, 165, 0))
+# Farben als RGB-Werte
+LIGHT_RED = (255, 102, 102)  # Helles Rot  
+RED = (255, 0, 0)            # Standard Rot  
+GREEN = (0, 255, 0)      # Grün
+BLUE = (0, 0, 255)       # Blau
+YELLOW = (255, 255, 0)   # Gelb
+CYAN = (0, 255, 255)     # Cyan (Türkis)
+PINK = (255, 0, 255)  # Magenta (Pink)
+ORANGE = (255, 165, 0)   # Orange
+PURPLE = (128, 0, 128)   # Lila
+BROWN = (139, 69, 19)    # Braun
+WHITE = (255, 255, 255)  # Weiß
+BLACK = (0, 0, 0)        # Schwarz 
+GRAY = (128, 128, 128)        # Mittleres Grau  
 
 # Schriftarten
 '''

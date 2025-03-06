@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong_Game")
 
 # Hintergrundbild:
-background = pygame.image.load("Pong4.png")  # Bild laden
+background = pygame.image.load("Z_pong.png")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Variablen:
@@ -94,25 +94,21 @@ while running:
     if ball.bottom >= height:
         running = False
 
-    # Visualisierung:
-    white = (255, 255, 255)
-    dark_gray = (100, 100, 100)
-
     # Schläger:
-    pygame.draw.rect(screen, dark_gray, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten
-    pygame.draw.rect(screen, white, player)
+    pygame.draw.rect(screen, Y_config.LIGHT_RED, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten
+    pygame.draw.rect(screen, Y_config.RED, player)
 
     # Ball:
-    pygame.draw.ellipse(screen, dark_gray, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
-    pygame.draw.ellipse(screen, white, ball) 
+    pygame.draw.ellipse(screen, Y_config.LIGHT_RED, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
+    pygame.draw.ellipse(screen, Y_config.RED, ball) 
 
-    obstacle_colour = (255, 218, 185)
+    obstacle_colour = (Y_config.ORANGE)
     for obstacle in obstacles:
         pygame.draw.rect(screen, obstacle_colour, obstacle)
 
     # Score anzeigen:
-    score_text = font.render(f"Score: {score_pong}", True, white)
-    screen.blit(score_text, (width // 2 - 30, 20))
+    score_text = font.render(f"Score: {score_pong}", True, Y_config.GRAY)
+    screen.blit(score_text, (width // 2 - 55, 20))
 
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
