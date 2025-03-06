@@ -25,7 +25,6 @@ font_instruction = pygame.font.Font(None, 30)
 input_box = pygame.Rect(width / 2 - 100, 250, 200, 40)
 start_button = pygame.Rect(width / 2 - 100, 350, 200, 50)
 info_button = pygame.Rect(width / 2 - 15, 420, 30, 30)
-info_visible, player_name = False, ""
 info_text = [
     "Spiele dich durch drei Mini-Spiele",
     "        und sammle Punkte!",
@@ -49,7 +48,8 @@ def check_player_name(name):
         return name
 
 def start_screen():
-    global info_visible, player_name
+    player_name = ""
+    info_visible = False
     while True:
         screen.blit(background, (0, 0))
         
