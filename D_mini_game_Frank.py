@@ -53,6 +53,10 @@ def game_over():
 # Main Game Loop
 while True:
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+                pygame.quit()
+                exit()
         if event.type == pygame.QUIT:
             game_over()
         if event.type == pygame.KEYDOWN:

@@ -72,6 +72,10 @@ def start_screen(title_text, instructions_text, info_text, next_file):
         pygame.display.flip()
         
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+                    pygame.quit()
+                    exit()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
