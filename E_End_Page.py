@@ -2,6 +2,7 @@ import pygame
 import random
 import os
 import sys
+import Y_config
 from G_Game_Scores import save_game_score
 
 # Übergeben der Scores der einzelnen Mini Games. Sicherstellen, dass fehlende Werte auf 0 gesetzt werden
@@ -19,17 +20,12 @@ os.environ["FINAL_GAME_SCORE"] = str(final_game_score)
 pygame.init()
 
 # Fenstergröße
-width, height = 600, 600
+width, height = Y_config.WIDTH, Y_config.HEIGHT
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Ende")
 
 background = pygame.image.load("Z_background_pages.jpg")  # Bild laden und anpassen
 background = pygame.transform.scale(background, (width, height))
-
-# Farben und Schriftarten
-white = (255, 255, 255)
-black = pygame.Color(0, 0, 0)
-green = pygame.Color(0, 255, 0)  # Grüne Farbe für final_game_score
 
 font_title = pygame.font.Font(None, 70)
 font = pygame.font.Font(None, 50)
@@ -97,23 +93,23 @@ def start_screen(final_game_score):
         score_lines = score_text.split(" ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
         score_y = 100  # Startposition für die erste Zeile
         for line in score_lines:
-            score_part = font_title.render(line, True, green)
+            score_part = font_title.render(line, True, Y_config.GREEN)
             screen.blit(score_part, (width / 2 - score_part.get_width() / 2, score_y))
             score_y += 60  # Vertikaler Abstand für die nächste Zeile
 
         # Nachricht anzeigen
         for i, part in enumerate(parts):
-            part_text = font_instruction.render(part, True, black)
+            part_text = font_instruction.render(part, True, Y_config.BLACK)
             screen.blit(part_text, (width / 2 - part_text.get_width() / 2, 250 + i * 40))  # Nachrichten um 100 nach unten verschoben
 
         # Restart Button
-        pygame.draw.rect(screen, white, restart_button)
-        button_text1 = font.render("Restart", True, (0, 0, 0))
+        pygame.draw.rect(screen, Y_config.WHITE, restart_button)
+        button_text1 = font.render("Restart", True, Y_config.BLACK)
         screen.blit(button_text1, (width / 2 - button_text1.get_width() / 2, height / 2 + 80))  # Start-Button weiter nach unten verschoben
 
         # Score Button
-        pygame.draw.rect(screen, white, score_button)
-        button_text2 = font.render("Bestenliste", True, (0, 0, 0))
+        pygame.draw.rect(screen, Y_config.WHITE, score_button)
+        button_text2 = font.render("Bestenliste", True, Y_config.BLACK)
         screen.blit(button_text2, (width / 2 - button_text2.get_width() / 2, height / 2 + 150))  # Start-Button weiter nach unten verschoben
 
         pygame.display.flip()

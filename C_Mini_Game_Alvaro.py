@@ -3,6 +3,7 @@ import random
 import os
 import sys
 import time
+import Y_config
 
 pygame.init()
 
@@ -32,9 +33,7 @@ TILE_COLORS = {
     1024: (237, 197, 63),
     2048: (237, 194, 46)
 }
-FONT_COLOR = (0, 0, 0) #black font
 FONT = pygame.font.SysFont('arial', 40)
-
 #############################
 
 # basics of game board and playing tiles
@@ -43,7 +42,7 @@ def draw_tile(screen, value, x, y): #defining the appearance of the single tiles
     rect = pygame.Rect(x, y, TILE_SIZE, TILE_SIZE) #tile size, square
     pygame.draw.rect(screen, color, rect)
     if value != 0: #tile labeling _ color and positioning for non-empty tiles
-        text = FONT.render(str(value), True, FONT_COLOR) #color
+        text = FONT.render(str(value), True, Y_config.black) #color
         text_rect = text.get_rect(center=(x + TILE_SIZE / 2, y + TILE_SIZE / 2)) #centering
         screen.blit(text, text_rect)
 def draw_board(screen, board): #defining the general board appearance
@@ -160,7 +159,7 @@ def main():
 
         draw_board(screen, board) #draw current state
 
-        total_score_2048_text = FONT.render(f"Score: {total_score_2048}", True, (0, 0, 0)) # Display the score
+        total_score_2048_text = FONT.render(f"Score: {total_score_2048}", True, Y_config.black) # Display the score
         total_score_2048_x = SCREEN_WIDTH - MARGIN - total_score_2048_text.get_width()  # Calculate x position for top right
         screen.blit(total_score_2048_text, (total_score_2048_x, 0))  # Display score
 

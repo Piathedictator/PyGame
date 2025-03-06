@@ -1,5 +1,4 @@
 import os
-import pygame
 from B_First_Page_Pia import start_screen  # Import der Funktion, aber kein automatischer Aufruf mehr!
 #from F_End_Page import total_score_2048
 

@@ -2,12 +2,13 @@ import pygame
 import random
 import sys
 import os
+import Y_config
 
 
 pygame.init()
 
 # Fenstergröße
-width, height = 600, 600
+width, height = Y_config.WIDTH, Y_config.HEIGHT
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong_Game")
 
