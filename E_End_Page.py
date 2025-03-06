@@ -125,15 +125,16 @@ def start_screen(final_game_score):
             if event.type == pygame.MOUSEBUTTONDOWN and restart_button.collidepoint(event.pos):
                 running = False
                 # Weiteres Spiel starten
+                pygame.quit()  # Pygame sauber beenden
                 command = "python3" if sys.platform != "win32" else "python"
                 os.system(f"{command} A_First_Page_generall.py")
             if event.type == pygame.MOUSEBUTTONDOWN and score_button.collidepoint(event.pos):
                 running = False
                 # Weiteres Spiel starten
+                pygame.quit()  # Pygame sauber beenden
                 command = "python3" if sys.platform != "win32" else "python"
                 os.system(f"{command} F_Bestenliste.py")
 
 start_screen(final_game_score)
-
 
 
