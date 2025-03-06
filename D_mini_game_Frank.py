@@ -20,8 +20,6 @@ WIDTH, HEIGHT = 600, 600
 GRID_SIZE = 10
 BACKGROUND_IMAGE = pygame.image.load("Z_BackSnake.jpg")  # Hintergrundbild laden
 BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (WIDTH, HEIGHT))
-GAMEOVER_IMAGE = pygame.image.load("Z_background_pong.jpg")  # Game Over Bild laden
-GAMEOVER_IMAGE = pygame.transform.scale(GAMEOVER_IMAGE, (WIDTH, HEIGHT))
 
 # Fenster erstellen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -50,14 +48,13 @@ def draw_score():
 # Game Over Funktion
 def game_over():
     pygame.quit()  # Pygame beenden
-    
+    sys.exit()  # Das ganze Skript beenden
 
 # Main Game Loop
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
+            game_over()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 change_to = 'UP'
@@ -90,12 +87,11 @@ while True:
 
     # Snake wächst, wenn es das Obst frisst
     snake_body.insert(0, list(snake_position))
-    if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
+    if snake_position == fruit_position:
         score_snake += 10
         fruit_spawn = False
     else:
         snake_body.pop()
-
 
     # Neues Obst spawnen
     if not fruit_spawn:
@@ -108,24 +104,16 @@ while True:
     # Snake und Obst zeichnen
     for pos in snake_body:
         pygame.draw.rect(screen, green, pygame.Rect(pos[0], pos[1], 10, 10))
-        pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
+    pygame.draw.rect(screen, orange, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
     # Game Over Bedingungen
-    if snake_position[0] < 0 or snake_position[0] > WIDTH-10 or snake_position[1] < 0 or snake_position[1] > HEIGHT-10:
-        os.environ["SCORE_SNAKE"] = str(score_snake)
-        next_file = "E_End_Page.py"
-        command = "python3" if sys.platform != "win32" else "python"
-        os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
-        game_over()
+    if snake_position[0] < 0 or snake_position[0] >= WIDTH or snake_position[1] < 0 or snake_position[1] >= HEIGHT:
+        break
 
     # Snake Körper berühren (Selbstkollision)
     for block in snake_body[1:]:
-        if snake_position[0] == block[0] and snake_position[1] == block[1]:
-            os.environ["SCORE_SNAKE"] = str(score_snake)
-            next_file = "E_End_Page.py"
-            command = "python3" if sys.platform != "win32" else "python"
-            os.system(f"{command} {next_file} {score_snake}") # Score_snake Variable muss ergänzt werden
-            game_over()
+        if snake_position == block:
+            break
 
     # Punktestand anzeigen
     draw_score()
@@ -135,3 +123,17 @@ while True:
 
     # FPS einstellen
     clock.tick(snake_speed)
+
+# Pygame beenden
+pygame.quit()
+
+# Score in Umgebungsvariable speichern
+os.environ["SCORE_SNAKE"] = str(score_snake)
+
+# Externes Skript starten
+next_file = "E_End_Page.py"
+command = "python3" if sys.platform != "win32" else "python"
+os.system(f"{command} {next_file} {score_snake}")
+
+sys.exit()  # Sicherstellen, dass das Skript beendet wird
+

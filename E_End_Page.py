@@ -39,31 +39,31 @@ font_instruction = pygame.font.Font(None, 30)
 def start_screen(final_game_score):
     # Game Over Nachrichten für unterschiedliche Punktzahlen
     game_over_messages_low = [
-        "Das ist ja nicht so gut gelaufen.: Probier's nochmal!",
-        "Anfängerfehler.: Jetzt streng dich mal an!",
-        "Hätte hätte Snake Game Kette.: Da machste nix, probier's nochmal!",
-        "Digga, dein Versagen kotzt mich an.: Vallah!",
-        "Du hast verloren.: Geh nach Hause.",
-        "Du hast schwach angefangen.: Dann stark nachgelassen!",
+        "Das ist ja nicht so gut gelaufen. Probier's nochmal!",
+        "Anfängerfehler. Jetzt streng dich mal an!",
+        "Hätte hätte Snake Game Kette. Da machste nix, probier's nochmal!",
+        "Digga, dein Versagen kotzt mich an. Vallah!",
+        "Du hast verloren. Geh nach Hause.",
+        "Du hast schwach angefangen. Dann stark nachgelassen!",
         "Loooooooser!!!",
         "Digga, was war das?!",
         "Spielst du mit den Füßen oder wat?",
-        "Liegt dein Versagen am Spiel?: Ich denke nicht."
+        "Liegt dein Versagen am Spiel? Ich denke nicht."
     ]
     
     game_over_messages_medium = [
-        "Ganz gut.: Aber noch nicht genug!",
-        "Na, das war schon besser.: Mehr Konzentration!",
-        "Fast geschafft.: Aber noch ist nicht alles gewonnen!",
+        "Ganz gut. Aber noch nicht genug!",
+        "Na, das war schon besser. Mehr Konzentration!",
+        "Fast geschafft. Aber noch ist nicht alles gewonnen!",
         "Mühlen mahlen langsam. Deine Besonders.",
         "Gar nicht schlecht. Hast du jemand dafür bezahlt?",
         "Ganz gut, aber da geht noch mehr!"
     ]
     
     game_over_messages_high = [
-        "Super!: Das war richtig stark!",
-        "Top Leistung!: Fast perfekt!",
-        "Du hast es richtig drauf!: Weiter so!",
+        "Super! Das war richtig stark!",
+        "Top Leistung! Fast perfekt!",
+        "Du hast es richtig drauf! Weiter so!",
         "Das war überraschend gut",
         "Weeeee are the champioooons.",
         "Unheimlich gut.",
@@ -81,11 +81,9 @@ def start_screen(final_game_score):
 
     # Zufällige Nachricht aus der ausgewählten Gruppe
     message = random.choice(message_group)
-    parts = message.split(": ")  # Nachricht an ':' teilen
+    parts = message.split(": ")  # Nachricht an ':' teilen, aber sicherstellen, dass das klappt
 
     restart_button = pygame.Rect(width / 2 - 75, height / 2 + 70, 150, 50)  # Restart-Button
-    running = True
-
     score_button = pygame.Rect(width / 2 - 100, height / 2 + 140, 200, 50)  # Score-Button
     running = True
 
@@ -93,10 +91,10 @@ def start_screen(final_game_score):
         screen.blit(background, (0, 0))
 
         # Zeile für den final_game_score
-        score_text = f"Endpunktestand:! {final_game_score}"
+        score_text = f"Endpunktestand: {final_game_score}"
 
         # Zeilenumbruch in `score_text` einfügen
-        score_lines = score_text.split("! ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
+        score_lines = score_text.split(" ")  # Optional: wenn du nach "Dein Endpunktestand" und der Zahl trennen möchtest
         score_y = 100  # Startposition für die erste Zeile
         for line in score_lines:
             score_part = font_title.render(line, True, green)
@@ -114,11 +112,9 @@ def start_screen(final_game_score):
         screen.blit(button_text1, (width / 2 - button_text1.get_width() / 2, height / 2 + 80))  # Start-Button weiter nach unten verschoben
 
         # Score Button
-        
         pygame.draw.rect(screen, white, score_button)
         button_text2 = font.render("Bestenliste", True, (0, 0, 0))
         screen.blit(button_text2, (width / 2 - button_text2.get_width() / 2, height / 2 + 150))  # Start-Button weiter nach unten verschoben
-    
 
         pygame.display.flip()
 
@@ -136,6 +132,8 @@ def start_screen(final_game_score):
                 # Weiteres Spiel starten
                 command = "python3" if sys.platform != "win32" else "python"
                 os.system(f"{command} F_Bestenliste.py")
+
 start_screen(final_game_score)
+
 
 
