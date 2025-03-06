@@ -26,7 +26,7 @@ WHITE, BLUE, GRAY, PINK, YELLOW, BLACK = (
 FONT = pygame.font.Font(None, 60)
 FONT_INSTRUCTION = pygame.font.Font(None, 50)
 INFO_FONT = pygame.font.Font(None, 30)
-
+font_exit_text = pygame.font.Font(None, 30)
 # Info-Symbol
 info_button = pygame.Rect(WIDTH / 2 - 15, HEIGHT / 2 + 75, 30, 30)
 
@@ -52,6 +52,10 @@ def start_screen(title_text, instructions_text, info_text, next_file):
         instructions_surface = FONT_INSTRUCTION.render(instructions_text, True, PINK)
         screen.blit(instructions_surface, (WIDTH / 2 - instructions_surface.get_width() / 2, 200))
         
+        # Anweisung um das Spiel freiwillig zu beenden
+        exit_text = font_exit_text.render("Drück Q um das Spiel zu beenden", True, BLUE) 
+        screen.blit(exit_text, (WIDTH / 2 - (exit_text.get_width()/2), 520))
+
         # Start-Button
         pygame.draw.rect(screen, YELLOW, start_button)
         button_text = FONT.render("Start", True, PINK)

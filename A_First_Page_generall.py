@@ -3,7 +3,7 @@ import sys
 import os
 import csv
 import subprocess
-
+import Y_config
 pygame.init()
 
 # Fenstergröße
@@ -57,6 +57,8 @@ def start_screen():
         screen.blit(titel_text, (width / 2 - (titel_text.get_width()/2), 150))
         eingabe_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
         screen.blit(eingabe_text, (width / 2 - (eingabe_text.get_width()/2), 220))
+        exit_text = font_instruction.render("Drück Q um das Spiel zu beenden", True, blue) 
+        screen.blit(exit_text, (width / 2 - (exit_text.get_width()/2), 520))
 
         pygame.draw.rect(screen, white, input_box)
         screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
