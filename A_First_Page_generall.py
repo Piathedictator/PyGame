@@ -3,7 +3,7 @@ import sys
 import os
 import csv
 import subprocess
-
+import Y_config
 pygame.init()
 
 # Fenstergröße
@@ -57,6 +57,8 @@ def start_screen():
         screen.blit(titel_text, (width / 2 - (titel_text.get_width()/2), 150))
         eingabe_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
         screen.blit(eingabe_text, (width / 2 - (eingabe_text.get_width()/2), 220))
+        exit_text = font_instruction.render("Drück Q um das Spiel zu beenden", True, blue) 
+        screen.blit(exit_text, (width / 2 - (exit_text.get_width()/2), 520))
 
         pygame.draw.rect(screen, white, input_box)
         screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
@@ -72,20 +74,24 @@ def start_screen():
         pygame.display.flip()
 
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+                    pygame.quit()
+                    exit()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     player_name = player_name[:-1]
-                elif event.key == pygame.K_RETURN and player_name:
+                elif event.key == pygame.K_RETURN and player_name and len(player_name) <= 9:
                     final_player_name = check_player_name(player_name)
                     os.environ["PLAYER_NAME"] = str(final_player_name)
                     command = "python3" if sys.platform != "win32" else "python"
                     pygame.quit()
                     subprocess.call([command, "B_First_Page_Pia.py"])
                     sys.exit()
-                else:
+                elif len(player_name) < 9:  # Only add character if under limit
                     player_name += event.unicode
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:

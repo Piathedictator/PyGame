@@ -138,6 +138,10 @@ def main():
 
     while running:
         for event in pygame.event.get(): #recalls previous frame
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+                    pygame.quit()
+                    exit()
             if event.type == pygame.QUIT: #closing game
                 running = False
             elif event.type == pygame.KEYDOWN: #implementing the keys

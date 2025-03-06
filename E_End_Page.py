@@ -119,6 +119,10 @@ def start_screen(final_game_score):
         pygame.display.flip()
 
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+                    pygame.quit()
+                    exit()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()

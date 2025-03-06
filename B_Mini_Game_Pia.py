@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong_Game")
 
 # Hintergrundbild:
-background = pygame.image.load("Z_background_pong.jpg")  # Bild laden
+background = pygame.image.load("Pong4.png")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Variablen:
@@ -46,6 +46,10 @@ while running:
 
     # Event Handling
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+                pygame.quit()
+                exit()
         if event.type == pygame.QUIT:
             running = False
 
