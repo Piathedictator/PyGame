@@ -2,6 +2,7 @@ import pygame
 import sys
 import os
 import csv
+import subprocess
 
 pygame.init()
 
@@ -28,9 +29,9 @@ info_visible, player_name = False, ""
 info_text = [
     "Spiele dich durch drei Mini-Spiele",
     "        und sammle Punkte!",
-    ]
+]
 
-def check_player_name(name): #checking if the username exists already in the csv file
+def check_player_name(name):
     try:
         with open('player_scores.csv', 'r') as file:
             reader = csv.reader(file)
@@ -50,20 +51,18 @@ def check_player_name(name): #checking if the username exists already in the csv
 def start_screen():
     global info_visible, player_name
     while True:
-        screen.blit(background, (0, 0)) # Hintergrund
-        #Texte:
+        screen.blit(background, (0, 0))
+        
         titel_text = font_titel.render("Let's Play Python", True, pink)
         screen.blit(titel_text, (width / 2 - (titel_text.get_width()/2), 150))
         eingabe_text = font_instruction.render("Gib deinen Spielernamen ein:", True, pink)
         screen.blit(eingabe_text, (width / 2 - (eingabe_text.get_width()/2), 220))
 
-        #Boxen:
         pygame.draw.rect(screen, white, input_box)
         screen.blit(font.render(player_name, True, black), (input_box.x + 10, input_box.y + 5))
         pygame.draw.rect(screen, white, start_button)
         screen.blit(font.render("Start Spiel", True, black), (start_button.x + 10, start_button.y + 10))
 
-        #Info Button:
         pygame.draw.circle(screen, blue, info_button.center, 15)
         screen.blit(font.render("i", True, white), (info_button.x + 10, info_button.y))
         if info_visible:
@@ -73,26 +72,29 @@ def start_screen():
         pygame.display.flip()
 
         for event in pygame.event.get():
-            #Screen beenden wenn Quit
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            #Tasteneingaben speichern
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     player_name = player_name[:-1]
+                elif event.key == pygame.K_RETURN and player_name:
+                    final_player_name = check_player_name(player_name)
+                    os.environ["PLAYER_NAME"] = str(final_player_name)
+                    command = "python3" if sys.platform != "win32" else "python"
+                    pygame.quit()
+                    subprocess.call([command, "B_First_Page_Pia.py"])
+                    sys.exit()
                 else:
                     player_name += event.unicode
-            #Nächste Seite mit Mausklick starten:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(event.pos) and player_name:
                     final_player_name = check_player_name(player_name)
                     os.environ["PLAYER_NAME"] = str(final_player_name)
                     command = "python3" if sys.platform != "win32" else "python"
-                    #os.system(f"{command} B_First_Page_Pia.py \"{player_name}\"") # Startet neue Seite und übergibt Variable Player_Name
-                    os.system(f"{command} B_First_Page_Pia.py")
-                    return
-            #Info Button mit Maus aktivieren:
+                    pygame.quit()
+                    subprocess.call([command, "B_First_Page_Pia.py"])
+                    sys.exit()
             if event.type == pygame.MOUSEMOTION:
                 info_visible = info_button.collidepoint(event.pos)
 
