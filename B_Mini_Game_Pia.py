@@ -82,11 +82,11 @@ while running:
     if ball.colliderect(player):
         ball_speed_y *= -1 
         ball_speed_x *= speed_multiplier  # Geschwindigkeit erhöhen x & y
-        ball_speed_y *= speed_multiplier  
+        ball_speed_y *= speed_multiplier
+        paddle_speed *= speed_multiplier  
 
     # Wenn der Ball unten verschwindet → Game Over
     if ball.bottom >= height:
-        print(f"Game Over! Dein Score: {score_pong}")
         running = False
 
     # Visualisierung:
