@@ -13,4 +13,4 @@ if __name__ == "__main__":
         "zu verschieben und gleiche zu addieren.",
         "Das Ziel ist es die Zahl 2048 erreichen.",
     ]
-    start_screen(alvaro_title_text, alvaro_instruction_text, alvaro_info_text, "C_1_Mini_Game_Alvaro.py") # calling the function, start next file
+    start_screen(alvaro_title_text, alvaro_instruction_text, alvaro_info_text, "C_Mini_Game_Alvaro.py") # calling the function, start next file
