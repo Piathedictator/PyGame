@@ -1,1 +1,1 @@
-info_bu
+FONT_40

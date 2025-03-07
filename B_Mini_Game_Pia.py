@@ -27,9 +27,6 @@ speed_multiplier = 1.05  # Erhöhung der Geschwindigkeit nach jedem Score
 player = pygame.Rect(height / 2, 570 , paddle_height, paddle_width)
 ball = pygame.Rect(width / 2 , height / 2, ball_size, ball_size)
 
-#Schriftart
-font = pygame.font.Font(None, 40)
-
 # Hindernisse random erstellen: 
 obstacles = []
 def create_obstacle():
@@ -107,7 +104,7 @@ while running:
         pygame.draw.rect(screen, obstacle_colour, obstacle)
 
     # Score anzeigen:
-    score_text = font.render(f"Score: {score_pong}", True, Y_config.BLACK)
+    score_text = Y_config.FONT_40.render(f"Score: {score_pong}", True, Y_config.BLACK)
     screen.blit(score_text, (width // 2 - 55, 20))
 
     pygame.display.flip()

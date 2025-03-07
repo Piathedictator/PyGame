@@ -3,6 +3,7 @@ import pygame
 import os
 import sys
 pygame.init
+pygame.font.init()
 
 #Größe des Screens
 WIDTH, HEIGHT = 600, 600
@@ -24,9 +25,16 @@ WHITE = (255, 255, 255)  # Weiß
 BLACK = (0, 0, 0)        # Schwarz 
 GRAY = (128, 128, 128)        # Mittleres Grau  
 
+#Schatten:
+SHADOW_OFFSET = 3
+SHADOW_COLOR = (0, 0, 0)
+
 # Schriftarten
-'''
+
 FONT_30 = pygame.font.Font(None, 30) 
+FONT_40 = pygame.font.Font(None, 40) 
 FONT_50 = pygame.font.Font(None, 50)
+FONT_60 = pygame.font.Font(None, 50)
 FONT_70 = pygame.font.Font(None, 70)
-'''
+FONT_A = pygame.font.SysFont('arial', 40)
+

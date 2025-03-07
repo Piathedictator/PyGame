@@ -14,10 +14,6 @@ pygame.display.set_caption("Startseite_Python_Game")
 # Hintergrundbild
 background = pygame.transform.scale(pygame.image.load("Z_start_image.jpg"), (width, height))
 
-# Farben & Schriftarten
-font = pygame.font.Font(None, 50)
-font_titel = pygame.font.Font(None, 70)
-font_instruction = pygame.font.Font(None, 30)
 
 # UI-Elemente
 input_box = pygame.Rect(width / 2 - 100, 250, 200, 40)
@@ -47,24 +43,24 @@ def check_player_name(name):
 
 def draw_ui(player_name, info_visible):
     screen.blit(background, (0, 0))
-    render_text_with_shadow("Let's Play Python", font_titel, Y_config.CYAN, Y_config.BLACK, (width / 2 - font_titel.size("Let's Play Python")[0] / 2, 150))
-    render_text_with_shadow("Gib deinen Spielernamen ein:", font_instruction, Y_config.CYAN, Y_config.BLACK, (width / 2 - font_instruction.size("Gib deinen Spielernamen ein:")[0] / 2, 220))
-    screen.blit(font_instruction.render("Drück Q um das Spiel zu beenden", True, Y_config.CYAN), (30, 570))
+    render_text_with_shadow("Let's Play Python", Y_config.FONT_70, Y_config.CYAN, Y_config.BLACK, (width / 2 - Y_config.FONT_70.size("Let's Play Python")[0] / 2, 150))
+    render_text_with_shadow("Gib deinen Spielernamen ein:", Y_config.FONT_30, Y_config.CYAN, Y_config.BLACK, (width / 2 - Y_config.FONT_30.size("Gib deinen Spielernamen ein:")[0] / 2, 220))
+    screen.blit(Y_config.FONT_30.render("Drück Q um das Spiel zu beenden", True, Y_config.CYAN), (30, 570))
     
     pygame.draw.rect(screen, Y_config.WHITE, input_box)
-    screen.blit(font.render(player_name, True, Y_config.BLACK), (input_box.x + 10, input_box.y + 5))
+    screen.blit(Y_config.FONT_50.render(player_name, True, Y_config.BLACK), (input_box.x + 10, input_box.y + 5))
     pygame.draw.rect(screen, Y_config.WHITE, start_button)
-    screen.blit(font.render("Start Spiel", True, Y_config.BLACK), (start_button.x + 10, start_button.y + 10))
+    screen.blit(Y_config.FONT_50.render("Start Spiel", True, Y_config.BLACK), (start_button.x + 10, start_button.y + 10))
     
     pygame.draw.circle(screen, Y_config.BLACK, info_button.center, 15)
-    screen.blit(font.render("i", True, Y_config.WHITE), (info_button.x + 10, info_button.y))
+    screen.blit(Y_config.FONT_50.render("i", True, Y_config.WHITE), (info_button.x + 10, info_button.y))
     
     if info_visible:
         box_width, box_height = 400, 60
         box_x, box_y = (width - box_width) / 2, (height / 2 + 150)
         pygame.draw.rect(screen, Y_config.WHITE, (box_x, box_y, box_width, box_height))
         for i, line in enumerate(info_text):
-            screen.blit(font_instruction.render(line, True, Y_config.BLACK), (width / 2 - font_instruction.size(line)[0] / 2, (height / 2 + 160) + i * 20))
+            screen.blit(Y_config.FONT_30.render(line, True, Y_config.BLACK), (width / 2 - Y_config.FONT_30.size(line)[0] / 2, (height / 2 + 160) + i * 20))
     
     pygame.display.flip()
 

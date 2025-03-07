@@ -8,10 +8,7 @@ import Y_config
 pygame.init()
 
 # Spielfrequenz
-snake_speed = 30
-
-# Schriftart
-font = pygame.font.Font(None, 36)
+snake_speed = 25
 
 # Spielfeldgröße und Hintergrundbild
 
@@ -37,7 +34,7 @@ score_snake = 0
 
 # Score-Anzeige Funktion
 def draw_score():
-    score_text = font.render(f"Score: {score_snake}", True, Y_config.WHITE)
+    score_text = Y_config.FONT_40.render(f"Score: {score_snake}", True, Y_config.WHITE)
     screen.blit(score_text, (10, 10))
 
 # Main Game Loop
