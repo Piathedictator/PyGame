@@ -21,7 +21,7 @@ paddle_width, paddle_height = 15, 100
 ball_size = 15
 paddle_speed = 7
 ball_speed_x, ball_speed_y = 5, -5  # Ball Geschwindigkeit
-speed_multiplier = 1.05  # Erhöhung der Geschwindigkeit nach jedem Score
+speed_multiplier = 1.03  # Erhöhung der Geschwindigkeit nach jedem Score
 
 # Positioierung Objekte
 player = pygame.Rect(height / 2, 570 , paddle_height, paddle_width)
@@ -42,10 +42,10 @@ clock = pygame.time.Clock()
 while running:
     screen.blit(background, (0, 0))
 
-    # Event Handling
+    # Beenden mit Taste "Q"
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:  # Beenden mit Taste "Q"
+            if event.key == pygame.K_q:  
                 pygame.quit()
                 exit()
         if event.type == pygame.QUIT:
@@ -66,10 +66,12 @@ while running:
     if ball.left <= 0 or ball.right >= width:
         ball_speed_x *= -1
 
-    # Ball-Kollision mit oberer Wand (Score)
+    # Ball-Kollision mit oberer Wand (Score) plus Geschwindigkeit steigern
     if ball.top <= 0:
-        ball_speed_y *= -1
         score_pong += 1
+        ball_speed_x *= speed_multiplier  # Geschwindigkeit erhöhen x & y
+        ball_speed_y *= -1 * speed_multiplier
+        paddle_speed *= speed_multiplier
 
         if score_pong % 2 == 0:
             obstacles.append(create_obstacle())  # Alle 2 Scores wird Hinderniss erstellt
@@ -82,23 +84,21 @@ while running:
 
     # Ball-Kollision mit Spieler-Schläger
     if ball.colliderect(player):
-        ball_speed_y *= -1 
-        ball_speed_x *= speed_multiplier  # Geschwindigkeit erhöhen x & y
-        ball_speed_y *= speed_multiplier
-        paddle_speed *= speed_multiplier  
+        ball_speed_y *= -1   
 
     # Wenn der Ball unten verschwindet → Game Over
     if ball.bottom >= height:
         running = False
 
-    # Schläger:
+    # Schläger visualisieren:
     pygame.draw.rect(screen, Y_config.GRAY, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten
     pygame.draw.rect(screen, Y_config.PURPLE, player)
 
-    # Ball:
+    # Ball visualisieren:
     pygame.draw.ellipse(screen, Y_config.PINK, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
     pygame.draw.ellipse(screen, Y_config.PINK, ball) 
 
+    # Hindernisse visualisieren
     obstacle_colour = (Y_config.PURPLE)
     for obstacle in obstacles:
         pygame.draw.rect(screen, obstacle_colour, obstacle)
@@ -112,7 +112,7 @@ while running:
 
 pygame.quit()
 
+# Nächste Seite öfnnen und Score übergeben
 os.environ["SCORE_PONG"] = str(score_pong)
 command = "python3" if sys.platform != "win32" else "python"
-#os.system(f"{command} C_First_Page_2048.py {player_name} {score_pong}")
 os.system(f"{command} C_First_Page_2048.py")

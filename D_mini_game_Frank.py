@@ -7,7 +7,7 @@ import Y_config
 # Initialisierung von Pygame
 pygame.init()
 
-# Spielfrequenz
+# Spielgeschwindigkeit
 snake_speed = 25
 
 # Spielfeldgröße und Hintergrundbild

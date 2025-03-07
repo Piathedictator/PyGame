@@ -25,10 +25,6 @@ WHITE = (255, 255, 255)  # Weiß
 BLACK = (0, 0, 0)        # Schwarz 
 GRAY = (128, 128, 128)        # Mittleres Grau  
 
-#Schatten:
-SHADOW_OFFSET = 3
-SHADOW_COLOR = (0, 0, 0)
-
 # Schriftarten
 
 FONT_30 = pygame.font.Font(None, 30) 
