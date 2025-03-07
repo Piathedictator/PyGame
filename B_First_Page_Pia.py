@@ -48,8 +48,8 @@ def start_screen(title_text, instructions_text, info_text, next_file):
         screen.blit(instructions_surface, (width / 2 - instructions_surface.get_width() / 2, 200))
         
         # Anweisung um das Spiel freiwillig zu beenden
-        exit_text = FONT_30.render("Drück Q um das Spiel zu beenden", True, Y_config.BLACK) 
-        screen.blit(exit_text, (width / 2 - (exit_text.get_width()/2), 520))
+        exit_text = FONT_30.render("Drück Q um das Spiel zu beenden", True, Y_config.CYAN) 
+        screen.blit(exit_text, ((30, 570)))
 
         # Start-Button
         pygame.draw.rect(screen, Y_config.WHITE, start_button)
@@ -57,15 +57,15 @@ def start_screen(title_text, instructions_text, info_text, next_file):
         screen.blit(button_text, (width / 2 - button_text.get_width() / 2, height / 2 + 5))
         
         # Info-Symbol
-        pygame.draw.circle(screen, Y_config.CYAN, info_button.center, 15)
+        pygame.draw.circle(screen, Y_config.BLACK, info_button.center, 15)
         info_icon = FONT_50.render("i", True, Y_config.WHITE)
         screen.blit(info_icon, (info_button.x + 10, info_button.y))
         
         # Info-Text anzeigen, wenn aktiv
         if info_visible:
-            pygame.draw.rect(screen, Y_config.YELLOW, info_box)
+            pygame.draw.rect(screen, Y_config.WHITE, info_box)
             for i, line in enumerate(info_text):
-                text_surface = FONT_30.render(line, True, Y_config.CYAN)
+                text_surface = FONT_30.render(line, True, Y_config.BLACK)
                 screen.blit(text_surface, (width / 2 - text_surface.get_width()/2, (height / 2 + 120) + i * 20))
         
         pygame.display.flip()

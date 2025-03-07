@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pong_Game")
 
 # Hintergrundbild:
-background = pygame.image.load("Z_pong.png")  # Bild laden
+background = pygame.image.load("Z_pong.jpg")  # Bild laden
 background = pygame.transform.scale(background, (width, height))  # Größe anpassen
 
 # Variablen:
@@ -95,19 +95,19 @@ while running:
         running = False
 
     # Schläger:
-    pygame.draw.rect(screen, Y_config.LIGHT_RED, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten
-    pygame.draw.rect(screen, Y_config.RED, player)
+    pygame.draw.rect(screen, Y_config.GRAY, (player.x + 2, player.y + 2, player.width, player.height))  # Schatten
+    pygame.draw.rect(screen, Y_config.PURPLE, player)
 
     # Ball:
-    pygame.draw.ellipse(screen, Y_config.LIGHT_RED, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
-    pygame.draw.ellipse(screen, Y_config.RED, ball) 
+    pygame.draw.ellipse(screen, Y_config.PINK, (ball.x + 2, ball.y + 2, ball.width, ball.height))  # Schatten
+    pygame.draw.ellipse(screen, Y_config.PINK, ball) 
 
-    obstacle_colour = (Y_config.ORANGE)
+    obstacle_colour = (Y_config.PURPLE)
     for obstacle in obstacles:
         pygame.draw.rect(screen, obstacle_colour, obstacle)
 
     # Score anzeigen:
-    score_text = font.render(f"Score: {score_pong}", True, Y_config.GRAY)
+    score_text = font.render(f"Score: {score_pong}", True, Y_config.BLACK)
     screen.blit(score_text, (width // 2 - 55, 20))
 
     pygame.display.flip()
